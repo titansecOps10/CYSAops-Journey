@@ -39,6 +39,9 @@ It came back with two hidden pages that weren't linked anywhere on the actual si
 
 Used it to deposit money into account 8881 and watched the balance flip from -$1,232.32 to positive. That's the whole point of the exercise — showing that this isn't a theoretical bug, you can actually walk in and change real account data because nobody put a lock on the door.
 
+Video Demo.
+ https://youtube.com/shorts/4mD1zOtmzCk?si=HUmZbkelpOiljM3w
+
 Finished all 4 tasks, picked up 32 points.
 
 Honestly the biggest thing I took from this: I expected "hacking" to mean writing exploit code or something technical like that. This was just... noticing an unlocked door and walking through it. A lot of real vulnerabilities are probably this simple, not some Hollywood movie scene.
