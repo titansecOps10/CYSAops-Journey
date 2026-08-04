@@ -47,3 +47,26 @@ Finished all 4 tasks, picked up 32 points.
 Honestly the biggest thing I took from this: I expected "hacking" to mean writing exploit code or something technical like that. This was just... noticing an unlocked door and walking through it. A lot of real vulnerabilities are probably this simple, not some Hollywood movie scene.
 
 Next up: Linux Fundamentals Part 1, now that it's unlocked.
+
+## Day 3 — Aug 4, 2026: Linux Fundamentals Part 1
+
+Completed Linux Fundamentals Part 1 on TryHackMe — first real dive into the Linux command line as planned for this week's roadmap focus.
+
+### What I practiced
+- Identity & location: `whoami`, `pwd`
+- Listing and reading files: `ls`, `cat`
+- Navigating folders: `cd`
+- Searching file contents: `grep THM access.log` — found a flag buried in a log file
+- Shell operators: `>` to overwrite a file's contents, `>>` to append without erasing
+
+### Result
+- ✅ Room completed
+- 🏆 9/9 tasks completed
+- 🎯 88 points earned
+
+### Key takeaway
+`grep` was the standout for me — being able to search a huge log file for a single pattern instantly is exactly the kind of skill that matters in real security work (finding one flagged line in thousands of log entries). Also finally understand the practical difference between `>` and `>>`, which I'll need for scripting later.
+
+### Next Steps
+- Linux Fundamentals Part 2
+- Continue building toward Phase 2 (ethical hacking labs)
