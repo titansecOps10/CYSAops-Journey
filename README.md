@@ -118,3 +118,35 @@ This ties directly back to real security work — a file showing `777` where sen
 ### Next Steps
 - Revisit AWS/cloud security once funds allow for TryHackMe premium, or find a free alternative (AWS Skill Builder, OverTheWire)
 - Continue Python scripting
+
+
+## Day 6 — Aug 7, 2026: Built a Password Strength Checker
+
+First real project from the roadmap's Phase 4 list. Built a Python script from scratch, piece by piece, that checks a password against four real security criteria and gives a verdict.
+
+### What I built
+- Takes a password as input
+- Checks four conditions:
+  - Length ≥ 8 characters
+  - Contains an uppercase letter
+  - Contains a number
+  - Contains a symbol
+- Scores the password (0-4) based on how many checks pass
+- Uses `if/elif/else` to give a final verdict: STRONG, MEDIUM, or WEAK
+
+### Key code concepts learned
+- `any()` with a loop condition — checking if *any* character in a string meets a condition
+- Boolean variables (`True`/`False`) and how Python treats them as 1/0 when summed
+- `if/elif/else` — first real branching logic, and why indentation isn't just style in Python, it's required syntax that defines what code belongs to which condition
+
+### Verified with two tests
+- `Vic@2000` → passed all 4 checks → correctly returned STRONG
+- `abc` → failed all 4 checks → correctly returned WEAK
+- Predicted the second result correctly before running it
+
+### Key takeaway
+This is the first time I built something with actual decision-making logic, not just input/output. Understanding *why* the indentation matters (it's not cosmetic, it defines code blocks) was the biggest concept shift today.
+
+### Next Steps
+- Push `password_checker.py` to GitHub (`python-practice` repo)
+- Continue building toward the roadmap's remaining Python projects (log analyzer, file encryption tool, port scanner)
