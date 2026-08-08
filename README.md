@@ -150,3 +150,56 @@ This is the first time I built something with actual decision-making logic, not 
 ### Next Steps
 - Push `password_checker.py` to GitHub (`python-practice` repo)
 - Continue building toward the roadmap's remaining Python projects (log analyzer, file encryption tool, port scanner)
+
+
+# Day 6 — Networking Fundamentals & Packet Analysis
+Date: August 8, 2026
+Author: Victory (TitanSEC)
+Environment: Contabo Cloud VPS (Windows Server), accessed via RDP
+
+## Objective
+Build a working knowledge of core networking diagnostic tools and packet-level traffic analysis using Wireshark, then investigate a real connection on a live system.
+
+## Tools Used
+- Windows PowerShell (ipconfig, ping, nslookup, tracert, netstat)
+- Wireshark 4.6.7 (with Npcap capture driver)
+
+## Part 1 — Command-Line Investigation
+Ran baseline diagnostics on the VPS to understand its network configuration.
+
+- ipconfig — Local network config. VPS internal IPv4: 169.58.18.221, gateway 169.58.0.1
+- ping 169.58.0.1 — Reachability to gateway. 100% packet loss — expected, most cloud gateways block ICMP by default
+- nslookup google.com — DNS resolution. Resolved cleanly via Contabo's DNS server (195.179.224.53), returning multiple IPv4/IPv6 addresses
+- tracert google.com — Path to destination. 14 hops, routed through Colt Technology Services' Frankfurt infrastructure before reaching Google's network
+- netstat -ano — Active/listening connections. Found routine listening services (RDP 3389, WinRM 5985/5986) and outbound scanner probes against exposed ports from dozens of unrelated foreign IPs
+
+Observation: Port 5986 (WinRM/HTTPS) showed connection attempts from a wide, geographically scattered set of IPs in TIME_WAIT state — consistent with background internet-wide port scanning rather than a targeted attack. Worth revisiting to confirm WinRM external exposure is actually needed.
+
+## Part 2 — Wireshark Packet Capture
+Installed Wireshark + Npcap on the VPS and ran a live capture on the Ethernet interface.
+
+### DNS Query/Response Pair (bbc.com)
+Isolated with filter: dns
+
+- Query (packet 7146): 169.58.18.221 → 195.179.224.53, UDP src port 61599 → dst port 53. Standard query, type A, for bbc.com.
+- Response (packet 7147): 195.179.224.53 → 169.58.18.221, UDP src port 53 → dst port 61599. Returned multiple A records in the 151.101.x.81 range — Fastly CDN IPs, confirming BBC serves its site through Fastly.
+
+This confirmed the standard DNS request/response pattern: client asks a nameserver over UDP/53, nameserver replies with IP(s) for the queried domain.
+
+### RDP/TLS Session Investigation
+Isolated with filter: tcp.port == 3389 && ip.addr == 105.112.212.77
+
+- Nearly all traffic captured on this filter was TLSv1.2 between the VPS (169.58.18.221) and the remote RDP client (105.112.212.77) over port 3389.
+- Inspected packet 7124 in detail: ACK number in the hundreds of thousands (Ack=536122), indicating this was deep into an already-established session, not a new connection.
+- Finding: No SYN / SYN-ACK / ACK handshake was present anywhere in the capture. The capture window started after the RDP session was already active, so the connection-opening handshake predates the capture and was not recoverable from this dataset.
+
+## Key Takeaways
+1. RDP encrypts session data at the transport layer via TLS — packet metadata (source/destination IP, port, timing, volume) is visible, but actual content (keystrokes, screen data) is not, by design.
+2. A capture is only as complete as its time window — starting a capture mid-session means foundational events (like the TCP handshake) may already be missing. Always start captures before the connection of interest begins, where possible.
+3. DNS traffic is easy to identify and interpret even without deep protocol knowledge: UDP port 53, clear query/response labeling in Wireshark, and readable domain names in both the packet detail pane and raw hex/ASCII dump.
+4. Background port-scanning noise against common admin ports (3389, 5985, 5986) is constant on any internet-facing host — not evidence of targeted compromise, but a good reminder to minimize exposed services.
+
+## Next Steps
+- Re-run capture starting before initiating a new RDP session, to capture the full TCP three-way handshake.
+- Review Windows Firewall / Contabo network firewall rules to restrict WinRM (5985/5986) to only trusted source IPs if not actively needed.
+- Continue toward TryHackMe rooms covering packet analysis and traffic fundamentals to build on this baseline.
