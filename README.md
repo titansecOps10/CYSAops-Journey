@@ -203,3 +203,43 @@ Isolated with filter: tcp.port == 3389 && ip.addr == 105.112.212.77
 - Re-run capture starting before initiating a new RDP session, to capture the full TCP three-way handshake.
 - Review Windows Firewall / Contabo network firewall rules to restrict WinRM (5985/5986) to only trusted source IPs if not actively needed.
 - Continue toward TryHackMe rooms covering packet analysis and traffic fundamentals to build on this baseline.
+
+## Day 7 — Aug 8, 2026: Week 1 Assignment — File Permission Auditor
+
+First weekly assignment, combining this week's two skills — Linux file permissions and Python fundamentals — into one working tool. Built a Python script that scans a folder and flags files with dangerous "world-writable" permissions, the same kind of misconfiguration real security auditors check for.
+
+### What I built
+A script that:
+- Takes a folder path as input
+- Lists every file in that folder using `os.listdir()`
+- Reads each file's raw permission data with `os.stat().st_mode`
+- Converts it to readable octal format (e.g. `666`) using `oct()`
+- Loops through every file and flags any where "Others" has write access — a real security red flag
+
+### Errors made and how I fixed them
+
+**1. "Folder name is not valid" in VS Code**
+Tried creating the project folder directly through VS Code's file dialog and it kept rejecting even simple names like `test1`. Turned out to be a quirk with VS Code's own dialog — creating the folder in Windows File Explorer instead worked immediately, then opened that same folder in VS Code normally.
+
+**2. NameError: 'readable_permissions' is not defined**
+While editing, accidentally deleted the line that calculated `readable_permissions` but left the print line that referenced it — Python couldn't find a variable that no longer existed. Fixed by re-adding the missing line back above the print statement.
+
+**3. Duplicate output (raw number printed twice)**
+Ended up with an old leftover print line still referencing the raw permission number, running alongside the new one showing the readable format. Left it in for now rather than fully rebuild the loop — it doesn't break functionality, just prints an extra line. Noted as cleanup for later.
+
+**4. Indentation confusion**
+Struggled with how many levels of indentation different lines needed, especially once the `if` statement was nested inside the `for` loop (2 levels deep). Eventually got it by thinking in terms of "one more Tab than the line it belongs inside."
+
+### Verified working
+Ran the script on its own folder — correctly detected `permission_auditor.py` had permission `666` and flagged it as WORLD-WRITABLE, since the last digit (6) means Others can write to it.
+
+### Key takeaway
+This was a genuinely frustrating session — small mistakes (a missing line, extra indentation, a buggy dialog box) compounded into real confusion more than once. But every error had a clear, findable cause, and working through each one slowly is what got the tool actually working by the end. First time combining two separate skills (Linux permissions + Python logic) into one real tool instead of practicing them separately.
+
+### Repo
+[weekly-assignments/week-1-file-permission-auditor](https://github.com/titansecOps10/weekly-assignments)
+
+### Next Steps
+- Clean up the duplicate print line
+- Add a summary count at the end (e.g. "3 files flagged out of 12 scanned")
+- Continue alternating Linux/Python/projects per the weekly roadmap
