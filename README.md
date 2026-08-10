@@ -243,3 +243,70 @@ This was a genuinely frustrating session — small mistakes (a missing line, ext
 - Clean up the duplicate print line
 - Add a summary count at the end (e.g. "3 files flagged out of 12 scanned")
 - Continue alternating Linux/Python/projects per the weekly roadmap
+
+
+# Day 9: Zero Trust Architecture (ZTA)
+
+**Date:** August 10, 2026
+
+---
+
+## What I Learned
+
+### Old Model vs Zero Trust
+
+| Traditional | Zero Trust |
+|-------------|------------|
+| Trust inside network | Trust NOTHING |
+| One-time check | Continuous verification |
+| Flat network | Micro-segmented |
+
+---
+
+### 5 Core Principles
+
+1. **Verify Explicitly** - Check identity, device, location, time, behavior
+2. **Least Privilege** - Give ONLY what's needed, NOTHING more
+3. **Assume Breach** - Act like you're already hacked
+4. **Micro-segmentation** - Divide network into tiny islands
+5. **Continuous Monitoring** - Trust is never permanent
+
+---
+
+### Real-World Example: Bank Access Control
+
+| Role | Access |
+|------|--------|
+| Customer | ONLY their own account (biometric required) |
+| Teller | View balances, withdraw/deposit |
+| Branch Manager | Approve loans, override tellers |
+| Accountant | Read-only transactions (can audit, can't withdraw) |
+| IT Admin | Server maintenance ONLY |
+
+---
+
+### Key Takeaways
+
+✅ **Least Privilege** - No one gets more access than they should
+
+✅ **Impossible Travel** - Login from China at 8AM then Atlanta at 5PM = BLOCK
+
+✅ **Blast Radius** - Even if Accountant gets hacked, only logs exposed. No funds stolen.
+
+✅ **Biometrics** - Fingerprint ensures customers access ONLY their own account
+
+---
+
+### My Definition
+
+> *"Trust NOTHING, verify EVERYTHING, give MINIMUM access."*
+
+---
+
+## Tomorrow's Topic
+
+*TBD*
+
+---
+
+**End of Day 9**
