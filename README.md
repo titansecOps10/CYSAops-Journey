@@ -310,3 +310,74 @@ This was a genuinely frustrating session — small mistakes (a missing line, ext
 ---
 
 **End of Day 9**
+
+
+# Ransomware Deep Dive
+
+**Date:** August 12, 2026
+
+---
+
+## What is Ransomware?
+
+Malware that locks your files and demands money to unlock them.
+
+---
+
+## How It Works
+
+1. You click a bad link or open a bad email
+2. Malware encrypts your files
+3. Pop-up appears: "Pay $500 in Bitcoin"
+4. You pay or lose files forever
+
+---
+
+## Real Example: Colonial Pipeline (2021)
+
+- Hacker used a stolen password (no MFA)
+- Shut down US fuel supply for 6 days
+- Company paid $4.4 million
+- Total damage: $100+ million
+
+---
+
+## My Answers to Scenarios
+
+### Scenario 1: Suspicious Email
+**My Answer:** Don't open it.
+**✅ Correct.** Verify with sender first.
+
+### Scenario 2: Ransomware Attack
+**My Answer:** Try to restore backups. Contact FBI. Hack the hacker if possible.
+**✅ Correct.** Some hackers get caught by getting hacked back.
+
+### Scenario 3: Found USB Drive
+**My Answer:** Hand it to IT immediately.
+**✅ Correct.** Never plug in unknown USBs.
+
+---
+
+## How to Defend
+
+### For Me (Personal)
+- Backup files regularly
+- Don't open suspicious emails
+- Keep software updated
+- Use antivirus
+
+### For Companies
+- Use MFA everywhere
+- Give employees only necessary access
+- Train staff to spot attacks
+- Have backups ready
+
+---
+
+## Key Takeaway
+
+> Backups save you. Criminals can't hold your files hostage if you have copies.
+
+---
+
+**Day 11 Complete - August 12, 2026**
