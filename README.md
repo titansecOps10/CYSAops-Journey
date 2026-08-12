@@ -381,3 +381,50 @@ Malware that locks your files and demands money to unlock them.
 ---
 
 **Day 11 Complete - August 12, 2026**
+
+
+# Day 12: MITRE ATT&CK Framework
+
+**Date:** August 13, 2026
+
+---
+
+## What I Learned
+
+MITRE ATT&CK is a database of hacker techniques. It shows exactly how attackers operate.
+
+---
+
+## The Attack Chain
+
+1. Reconnaissance (Gather info)
+2. Resource Development (Setup tools)
+3. Initial Access (Get in)
+4. Execution (Run malware)
+5. Persistence (Stay inside)
+6. Privilege Escalation (Get higher access)
+7. Defense Evasion (Avoid detection)
+8. Credential Access (Steal passwords)
+9. Discovery (Explore network)
+10. Lateral Movement (Move to other systems)
+11. Collection (Gather data)
+12. Exfiltration (Steal data)
+13. Impact (Final damage)
+
+---
+
+## Real Example
+
+Colonial Pipeline:
+- Initial Access → Stolen VPN password
+- Impact → Ransomware encryption
+
+---
+
+## Key Takeaway
+
+> *"Know your enemy. MITRE ATT&CK shows you exactly how hackers operate."*
+
+---
+
+**Day 12 Complete**
