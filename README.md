@@ -428,3 +428,66 @@ Colonial Pipeline:
 ---
 
 **Day 12 Complete**
+
+
+
+# Day 13: Cloud Security Basics
+
+**Date:** August 14, 2026
+
+---
+
+## What is Cloud Security?
+
+Protecting your data, apps, and infrastructure in the cloud.
+
+---
+
+## Shared Responsibility Model
+
+| Cloud Provider | You (Customer) |
+|----------------|----------------|
+| Physical security | Your data |
+| Network security | Your passwords |
+| Hardware security | Your configurations |
+| Base OS patching | Your apps |
+
+---
+
+## Common Cloud Mistakes
+
+- Public storage (anyone can view)
+- Weak passwords
+- No MFA
+- Too much access
+- Unpatched systems
+
+---
+
+## Real Example: Capital One (2019)
+
+- Misconfigured firewall
+- 100 million records exposed
+- $80 million fine
+
+**Lesson:** One misconfiguration = catastrophe.
+
+---
+
+## Cloud Security Tips
+
+- Use MFA
+- Least privilege access
+- Encrypt data
+- Monitor logs
+- Regular audits
+
+---
+
+## Key Takeaway
+
+> *"The cloud is secure by default, but insecure by configuration."*
+
+---
+
+**Day 13 Complete - August 14, 2026**
