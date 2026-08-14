@@ -491,3 +491,88 @@ Protecting your data, apps, and infrastructure in the cloud.
 ---
 
 **Day 13 Complete - August 14, 2026**
+
+
+# Day 14: Digital Forensics
+
+**Date:** August 15, 2026
+
+---
+
+## What is Digital Forensics?
+
+Investigating digital crime by finding and analyzing evidence.
+
+---
+
+## 5 Steps of Forensics
+
+1. **Identification** - Find devices with evidence
+2. **Preservation** - Secure evidence (NEVER work on original)
+3. **Analysis** - Examine data (logs, files, history)
+4. **Documentation** - Write everything down
+5. **Presentation** - Explain findings in court
+
+---
+
+## Types of Forensics
+
+- Computer (hard drives, files)
+- Network (traffic, logs)
+- Mobile (phones, texts)
+- Cloud (AWS, Azure)
+- Memory (RAM)
+
+---
+
+## Chain of Custody
+
+Every piece of evidence must be tracked:
+- Who collected it?
+- When?
+- Where?
+- Who had it next?
+
+If broken → Evidence is useless in court.
+
+---
+
+## Real Case: Silk Road
+
+**How FBI caught Ross Ulbricht:**
+- Traced server to Iceland
+- Watched him log in at a café
+- Grabbed his laptop while he was there
+
+**He got caught because:**
+- Reused usernames
+- Posted real email
+- Sloppy OpSec
+
+**Lesson:** Even masterminds make rookie mistakes.
+
+---
+
+## My Hot Take
+
+> *"If the FBI didn't physically see the laptop, they wouldn't have caught him. Rookies."*
+
+---
+
+## Tools Used
+
+- FTK (Forensic Toolkit)
+- EnCase
+- Autopsy (free)
+- Wireshark (network)
+- Volatility (memory)
+
+---
+
+## Key Takeaway
+
+> *"Digital evidence is fragile. One mistake destroys it forever."*
+
+---
+
+**Day 14 Complete - August 15, 2026**
