@@ -576,3 +576,106 @@ If broken → Evidence is useless in court.
 ---
 
 **Day 14 Complete - August 15, 2026**
+
+
+
+
+# Day 15: OSINT (Open Source Intelligence)
+
+**Date:** August 16, 2026
+
+---
+
+## What is OSINT?
+
+Gathering information from publicly available sources.
+
+No hacking. No breaking in. Just using what's already out there.
+
+---
+
+## Where OSINT Comes From
+
+| Source | Examples |
+|--------|----------|
+| Social Media | Facebook, Twitter, LinkedIn, Instagram |
+| Search Engines | Google, Bing, DuckDuckGo |
+| Public Records | Court records, property records |
+| Government Data | Census, voting records |
+| Company Websites | Employee names, emails |
+| Data Breaches | Leaked passwords, emails |
+
+---
+
+## What OSINT Can Reveal
+
+- Real name
+- Address
+- Phone number
+- Email
+- Family members
+- Employer
+- Habits
+- Passwords (via breaches)
+- Connections
+
+---
+
+## Real Example: The Masked Hacker
+
+**Mistake:** Used real email on a forum
+
+**How caught:**
+1. Email → LinkedIn → Real name
+2. Real name → Facebook → Friends, location
+3. Location → Public records → Address
+4. Address → FBI showed up
+
+**Lesson:** One slip = caught.
+
+---
+
+## OSINT Tools
+
+| Tool | Purpose |
+|------|---------|
+| Google Dorking | Advanced search |
+| Shodan | Find internet-connected devices |
+| Maltego | Visualize relationships |
+| theHarvester | Find emails and subdomains |
+| Recon-ng | OSINT automation |
+| Sherlock | Find usernames across platforms |
+| HaveIBeenPwned | Check if email is in a breach |
+
+---
+
+## How to Protect Yourself
+
+- Limit social media
+- Use fake names
+- Don't post location
+- Use different emails
+- Opt out of data brokers
+- Use strong passwords
+- Enable MFA
+
+---
+
+## My OSINT Challenge Answer
+
+**Scenario:** Journalist investigating a corrupt politician
+
+**3 things I'd search first:**
+1. Name (Google, LinkedIn)
+2. Email (theHarvester, HaveIBeenPwned)
+3. Social Media accounts (Sherlock)
+
+---
+
+## Key Takeaway
+
+> *"You don't need to be a hacker to find information. You just need to know where to look."*
+
+---
+
+**Day 15 Complete - August 16, 2026**
