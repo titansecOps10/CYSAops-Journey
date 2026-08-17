@@ -679,3 +679,43 @@ No hacking. No breaking in. Just using what's already out there.
 ---
 
 **Day 15 Complete - August 16, 2026**
+
+
+
+# Day 16: OSINT & Google Dorks
+
+**Date:** August 17, 2026
+
+---
+
+## What I Learned
+
+Google Dorks are advanced searches that find exposed information.
+
+---
+
+## Dorks I Tried
+
+1. `intitle:"index of" "wp-content"` → ✅ WORKED
+2. `inurl:login "admin" site:.com` → ✅ WORKED
+3. `filetype:log "username" -github` → ❌ BLOCKED
+4. `filetype:env "DB_PASSWORD" -github` → ❌ BLOCKED
+5. `site:.gov filetype:pdf "confidential"` → ❌ BLOCKED
+
+---
+
+## Results
+
+- No email breaches (HaveIBeenPwned)
+- Found exposed login pages and directories
+- Learned that VPN helps avoid Google blocks
+
+---
+
+## Key Takeaway
+
+> *"Google Dorks are powerful — but you need patience and sometimes a VPN."*
+
+---
+
+**Day 16 Complete**
