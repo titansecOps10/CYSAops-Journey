@@ -719,3 +719,36 @@ Google Dorks are advanced searches that find exposed information.
 ---
 
 **Day 16 Complete**
+
+
+# Day 17: Password Security & Cracking
+
+**Date:** August 18, 2026
+
+---
+
+## What I Learned
+
+- Hackers crack passwords using brute force, dictionary attacks, and rainbow tables
+- Length > 12 characters with mixed characters is strongest
+- Password managers are essential
+
+---
+
+## Password Strength Test Results
+
+| Password | Crack Time |
+|----------|------------|
+| password123 | Instant |
+| B1ue$ky#2026 | Minutes/hours |
+| correcthorsebatterystaple | Years |
+
+---
+
+## Key Takeaway
+
+> *"A strong password is the first line of defense. Make it long, unique, and random."*
+
+---
+
+**Day 17 Complete**
