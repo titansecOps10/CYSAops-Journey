@@ -752,3 +752,66 @@ Google Dorks are advanced searches that find exposed information.
 ---
 
 **Day 17 Complete**
+
+
+# Day 18: Phishing 2.0 — Advanced Social Engineering
+
+**Date:** August 19, 2026
+
+---
+
+## What I Learned
+
+Phishing has evolved from obvious scams to personalized, AI-driven attacks.
+
+---
+
+## Modern Techniques
+
+- Spear Phishing (targeted)
+- Whaling (executives)
+- Clone Phishing (copy real emails)
+- Vishing (voice calls)
+- Smishing (SMS)
+- Deepfake Phishing (video/audio)
+
+---
+
+## Why It Works
+
+- Urgency
+- Fear
+- Authority
+- Trust
+- Curiosity
+- Greed
+
+---
+
+## Real Example: MGM Resorts (2023)
+
+- Hacker called helpdesk
+- Pretended to be employee
+- Helpdesk reset password
+- $100+ million loss
+
+---
+
+## Defenses
+
+- Verify through another channel
+- Check email headers
+- Hover over links
+- Don't trust urgency
+- Use MFA
+- Security training
+
+---
+
+## Key Takeaway
+
+> *"Phishing 2.0 is personal, believable, and dangerous. Always verify before you trust."*
+
+---
+
+**Day 18 Complete**
