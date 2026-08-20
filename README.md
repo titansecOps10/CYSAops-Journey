@@ -815,3 +815,38 @@ Phishing has evolved from obvious scams to personalized, AI-driven attacks.
 ---
 
 **Day 18 Complete**
+
+
+
+# Day 19: Wi-Fi Security
+
+**Date:** August 20, 2026
+
+---
+
+## What I Learned
+
+Public Wi-Fi is insecure. Hackers use:
+- Man-in-the-Middle (intercept traffic)
+- Evil Twin (fake Wi-Fi networks)
+- Packet Sniffing (capture unencrypted data)
+
+---
+
+## How to Protect Myself
+
+- Use a VPN
+- Always use HTTPS (look for padlock)
+- Turn off file sharing
+- Use mobile hotspot instead of public Wi-Fi
+- Log out of sensitive accounts
+
+---
+
+## Key Takeaway
+
+> *"Public Wi-Fi is a public conversation. If you don't want strangers hearing it, encrypt it."*
+
+---
+
+**Day 19 Complete**
