@@ -850,3 +850,52 @@ Public Wi-Fi is insecure. Hackers use:
 ---
 
 **Day 19 Complete**
+
+
+# Day 20: Malware Types
+
+**Date:** August 21, 2026
+
+---
+
+## 7 Types of Malware
+
+1. Virus — Attaches to files, spreads when executed
+2. Worm — Self-replicates without user action
+3. Trojan — Disguises as legit software, steals data
+4. Ransomware — Encrypts files, demands payment
+5. Spyware — Secretly monitors activity
+6. Adware — Displays unwanted ads
+7. Rootkit — Hides deep in system, gives admin access
+
+---
+
+## How Malware Spreads
+
+- Email attachments
+- Malicious websites
+- USB drives
+- Software cracks
+- Phishing links
+- Exploits
+
+---
+
+## How to Defend
+
+- Antivirus
+- Keep software updated
+- Don't open suspicious emails
+- Use MFA
+- Backup data
+- Avoid cracked software
+
+---
+
+## Key Takeaway
+
+> *"Malware is everywhere. Stay vigilant, update your systems, and think before you click."*
+
+---
+
+**Day 20 Complete**
