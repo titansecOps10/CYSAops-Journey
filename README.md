@@ -899,3 +899,42 @@ Public Wi-Fi is insecure. Hackers use:
 ---
 
 **Day 20 Complete**
+
+# Day 21: Incident Response (IR)
+
+**Date:** August 23, 2026
+
+---
+
+## What I Learned
+
+Incident Response is the plan for when things go wrong.
+
+---
+
+## The 6 Phases
+
+1. **Preparation** — Train, plan, backup
+2. **Identification** — Detect and confirm the attack
+3. **Containment** — Isolate the threat
+4. **Eradication** — Remove the malware
+5. **Recovery** — Restore systems
+6. **Lessons Learned** — Improve for next time
+
+---
+
+## Real Example: Uber (2022)
+
+- No MFA → Employee got phished
+- Hacker accessed internal systems
+- Uber improved MFA after
+
+---
+
+## Key Takeaway
+
+> *"Incident Response is like a fire drill. If you don't practice, you'll panic when it's real."*
+
+---
+
+**Day 21 Complete**
