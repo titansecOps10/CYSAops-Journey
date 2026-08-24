@@ -938,3 +938,60 @@ Incident Response is the plan for when things go wrong.
 ---
 
 **Day 21 Complete**
+
+# Linux Permissions Cheat Sheet
+
+**Date:** August 24, 2026
+
+---
+
+## Permission Types
+
+- r = read
+- w = write
+- x = execute
+
+---
+
+## Permission Levels
+
+- u = user (owner)
+- g = group
+- o = others
+
+---
+
+## Chmod Number System
+
+| Number | Permission |
+|--------|------------|
+| 7 | rwx |
+| 6 | rw- |
+| 5 | r-x |
+| 4 | r-- |
+| 0 | --- |
+
+---
+
+## Common Commands
+
+- `ls -l` — View permissions
+- `chmod 755 file` — rwxr-xr-x
+- `chmod 644 file` — rw-r--r--
+- `chmod u+x file` — Add execute for user
+- `whoami` — Current user
+- `id` — User and group info
+
+---
+
+## Why This Matters in Cybersecurity
+
+Misconfigured permissions can allow hackers to:
+
+- Execute malicious scripts
+- Read sensitive files
+- Escalate privileges
+
+---
+
+**Day 22 Complete**
