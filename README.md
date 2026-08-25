@@ -995,3 +995,49 @@ Misconfigured permissions can allow hackers to:
 ---
 
 **Day 22 Complete**
+
+
+# Day 23: Web Application Security — OWASP Top 10
+
+**Date:** August 25, 2026
+
+---
+
+## OWASP Top 10 (2021)
+
+1. Broken Access Control
+2. Cryptographic Failures
+3. Injection (SQL, NoSQL, OS)
+4. Insecure Design
+5. Security Misconfiguration
+6. Vulnerable Components
+7. Identification Failures
+8. Software/Data Integrity
+9. Security Logging Failures
+10. Server-Side Request Forgery
+
+---
+
+## SQL Injection (SQLi)
+
+- Hackers inject malicious SQL queries
+- Can steal databases, bypass logins
+- Example: `' OR '1'='1`
+
+---
+
+## Cross-Site Scripting (XSS)
+
+- Hackers inject malicious JavaScript
+- Can steal cookies, hijack sessions
+- Example: `<script>alert('XSS')</script>`
+
+---
+
+## Key Takeaway
+
+> *"Web security is the #1 skill for bug bounty and employment. Learn it. Practice it. Master it."*
+
+---
+
+**Day 23 Complete**
