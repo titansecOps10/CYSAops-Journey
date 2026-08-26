@@ -1041,3 +1041,58 @@ Misconfigured permissions can allow hackers to:
 ---
 
 **Day 23 Complete**
+
+
+# Day 24: Cross-Site Scripting (XSS)
+
+**Date:** August 26, 2026
+
+---
+
+## What is XSS?
+
+Hackers inject malicious JavaScript into websites.
+
+---
+
+## 3 Types of XSS
+
+1. Reflected XSS — Script in URL
+2. Stored XSS — Script saved on website
+3. DOM-based XSS — Script runs in browser
+
+---
+
+## What Hackers Can Do
+
+- Steal cookies
+- Log keystrokes
+- Phish users
+- Deface websites
+- Redirect to malicious sites
+
+---
+
+## Real Example: MySpace (2005)
+
+- 1 million users infected in 24 hours
+- Platform had to shut down
+
+---
+
+## How to Defend
+
+- Input validation
+- Output encoding
+- Content Security Policy (CSP)
+- Use secure frameworks
+
+---
+
+## Key Takeaway
+
+> *"XSS is everywhere. Always validate and encode user input."*
+
+---
+
+**Day 24 Complete**
