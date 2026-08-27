@@ -1096,3 +1096,53 @@ Hackers inject malicious JavaScript into websites.
 ---
 
 **Day 24 Complete**
+
+
+
+# Day 25: Broken Authentication
+
+**Date:** August 27, 2026
+
+---
+
+## What is Broken Authentication?
+
+Weak login systems that allow hackers to bypass passwords.
+
+---
+
+## Common Attacks
+
+- Brute Force
+- Credential Stuffing
+- Session Hijacking
+- Weak Password Reset
+- No MFA
+
+---
+
+## Real Example: Uber (2022)
+
+- Hacker used leaked password
+- No MFA on employee account
+- $100+ million damage
+
+---
+
+## Defenses
+
+- MFA
+- Rate Limiting
+- Strong Passwords
+- Session Expiry
+- Secure Password Reset
+
+---
+
+## Key Takeaway
+
+> *"Passwords are not enough. MFA is mandatory."*
+
+---
+
+**Day 25 Complete**
