@@ -1143,6 +1143,9 @@ Weak login systems that allow hackers to bypass passwords.
 
 > *"Passwords are not enough. MFA is mandatory."*
 
+also built a password simulator via replit
+
+https://1feb1801-773a-4293-aa60-4932fb2156cf-00-3tzlqlykx8hyx.worf.replit.dev/
 ---
 
 **Day 25 Complete**
