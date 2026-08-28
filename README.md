@@ -1151,3 +1151,54 @@ Using unlimited attempts options and rate limits
 ---
 
 **Day 25 Complete**
+
+
+# Day 26: Security Misconfigurations
+
+**Date:** August 28, 2026
+
+---
+
+## What Are They?
+
+Systems set up carelessly — leaving doors open for hackers.
+
+---
+
+## Common Misconfigurations
+
+- Default Credentials (admin/admin)
+- Open Ports (22, 3306)
+- Public Cloud Storage (S3 buckets)
+- Verbose Error Messages
+- Unpatched Software
+- Directory Listing
+
+---
+
+## Real Example: Capital One (2019)
+
+- Misconfigured S3 bucket → public
+- 100 million records exposed
+- $80 million fine
+
+---
+
+## Defenses
+
+- Change default passwords
+- Close unnecessary ports
+- Private cloud storage
+- Hide error details
+- Patch regularly
+- Automated scanning
+
+---
+
+## Key Takeaway
+
+> *"Most breaches happen because of lazy defaults. Change them."*
+
+---
+
+**Day 26 Complete**
