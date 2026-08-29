@@ -1202,3 +1202,51 @@ Systems set up carelessly — leaving doors open for hackers.
 ---
 
 **Day 26 Complete**
+
+# Day 27: Vulnerable & Outdated Components
+
+**Date:** August 29, 2026
+
+---
+
+## My Read on This
+
+Honestly, this is one of those "it's so simple it's stupid" vulnerabilities. Like, why do we need a whole category for this? But then I remember Log4j, and I see why it's here.
+
+Hackers don't invent new ways to break in—they just look for stuff you forgot to patch. It's like trying to rob a house and finding the back door open cos the owner forgot to close it.
+
+---
+
+## The Log4j Meltdown
+
+I remember reading about this one. A logging library. A LIBRARY. And it took down half the internet. People don't realize how deep these dependencies go.
+
+- **Core issue:** Remote Code Execution
+- **Affected:** Basically everything running Java
+- **Fix:** Update one file. But the problem was *finding* where it was buried.
+
+That's the real challenge—knowing what you have before you can secure it.
+
+---
+
+## My Crypto Take
+
+I'm looking at crypto exchanges and DeFi protocols now. They use so many third-party services. If one of those services has an outdated dependency, the entire pool of funds is at risk.
+
+**Takeaway:** Do your own research. Is the protocol you're using still actively maintained? If the code base looks dead, stay away.
+
+---
+
+## Quick Activity (I did this today)
+
+I checked the Wordpress version on a random blog I visit. They were running an old version. I'm not interested in hacking them—I sent them a message to update their stuff. Security is a shared responsibility.
+
+---
+
+## My Golden Rule
+
+> *"If you're not updating it, you're accepting the risk."*
+
+---
+
+**Day 27 Complete**
