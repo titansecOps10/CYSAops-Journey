@@ -1250,3 +1250,50 @@ I checked the Wordpress version on a random blog I visit. They were running an o
 ---
 
 **Day 27 Complete**
+
+
+# Day 28: Security Logging & Monitoring Failures
+
+**Date:** August 30, 2026
+
+---
+
+## My Take on This
+
+I think this is underrated. Everyone's obsessed with stopping the attack, but nobody talks about what happens when the attack succeeds (and let's be real—it will).
+
+If you don't have logs, you don't have a crime scene. You're just guessing.
+
+---
+
+## Why It Hit Me
+
+I was thinking about the Colonial Pipeline hack. The hackers got in because of a weak password. But the company didn't even notice the unusual login until the ransomware screen popped up.
+
+That's a logging failure.
+
+---
+
+## The Crypto Angle
+
+For me, I'm looking at exchanges and DeFi protocols now. If a protocol doesn't log admin actions or withdrawal requests, you won't know if it's compromised until the TVL drops to zero.
+
+**Red flag:** A project that doesn't have a public security audit or a transparent bug bounty program.
+
+---
+
+## What I Did Today
+
+I wrote a simple Python script in Replit to simulate a log file. It flagged three failed logins in a row as a potential brute force.
+
+It was a basic simulation—but it showed me what a real SOC analyst sees every day.
+
+---
+
+## My Philosophy
+
+> *"You can't stop every attack. But you can always spot it if you're watching."*
+
+---
+
+**Day 28 Complete**
