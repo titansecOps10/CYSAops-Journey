@@ -1297,3 +1297,53 @@ It was a basic simulation—but it showed me what a real SOC analyst sees every 
 ---
 
 **Day 28 Complete**
+
+
+
+
+# Day 29: Server-Side Request Forgery (SSRF)
+
+**Date:** August 31, 2026
+
+---
+
+## What Is SSRF?
+
+Hackers trick a server into making requests to places it shouldn't.
+
+---
+
+## What Hackers Can Do
+
+- Access internal services (databases, admin panels)
+- Bypass firewalls
+- Read local files (`file:///etc/passwd`)
+- Port scan internal networks
+- Access cloud metadata (`169.254.169.254`)
+
+---
+
+## Real Example: Capital One (2019)
+
+- SSRF vulnerability allowed access to AWS metadata service
+- IAM credentials were stolen
+- 100 million records exposed
+
+---
+
+## How to Defend
+
+- Allowlist trusted domains
+- Block internal IP ranges
+- Validate all user input
+- Use a proxy to filter dangerous requests
+
+---
+
+## My Golden Rule
+
+> *"If your server makes requests based on user input, assume it's vulnerable until proven otherwise."*
+
+---
+
+**Day 29 Complete**
