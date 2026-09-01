@@ -1347,3 +1347,41 @@ Hackers trick a server into making requests to places it shouldn't.
 ---
 
 **Day 29 Complete**
+
+# Day 30: Insecure Design — OWASP #4
+
+**Date:** September 1, 2026
+
+---
+
+## My Read on This
+
+I get why this is a separate category now. It’s not about one missing piece—it’s about the whole picture being built wrong.
+
+Some bugs you can fix with a patch. But if the design itself is flawed, you're just putting band-aids on a broken bone.
+
+---
+
+## The Twitter API Leak
+
+This one stuck with me. They didn't plan for a scenario where someone would go poking around the authentication system. But hackers did.
+
+250 million dollar fine. That's what insecure design costs.
+
+---
+
+## The Crypto Take
+
+Now I’m thinking about DeFi protocols. If a protocol’s smart contract is designed without proper access controls, you can't just fix it with a patch—you have to rewrite the whole thing.
+
+That's why audits matter so much.
+
+---
+
+## My Golden Rule
+
+> *"If the design is bad, the code will always be insecure no matter how many patches you add."*
+
+---
+
+**Day 30 Complete**
