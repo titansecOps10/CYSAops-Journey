@@ -1385,3 +1385,37 @@ That's why audits matter so much.
 ---
 
 **Day 30 Complete**
+
+
+
+# Day 31: IDOR Practical — Burp Suite
+
+**Date:** September 2, 2026
+
+---
+
+## What I Did
+
+- Accessed the PortSwigger IDOR lab
+- Logged in as `wiener`
+- Used Burp Suite to intercept the request
+- Changed `id=wiener` to `id=carlos`
+- The server returned Carlos's data
+
+---
+
+## What I Learned
+
+- IDOR is when the server trusts user-supplied IDs
+- It's a type of Broken Access Control (OWASP #1)
+- Burp Suite makes it easy to find
+
+---
+
+## Key Takeaway
+
+> *"Never trust user input — even for IDs."*
+
+---
+
+**Day 31 Complete**
