@@ -1419,3 +1419,52 @@ That's why audits matter so much.
 ---
 
 **Day 31 Complete**
+
+
+
+
+# Day 32: Cryptographic Failures — OWASP #2
+
+**Date:** September 3, 2026
+
+---
+
+## What I Learned
+
+Cryptographic failures happen when encryption is weak, missing, or misconfigured.
+
+---
+
+## Real Example: Equifax (2017)
+
+- Unencrypted customer data
+- 147 million records exposed
+- $700 million settlement
+
+---
+
+## Common Failures
+
+- HTTP instead of HTTPS
+- Weak hashing (MD5, SHA1)
+- Hardcoded keys
+- No encryption at rest
+
+---
+
+## How to Defend
+
+- HTTPS everywhere
+- Strong hashing (bcrypt, Argon2)
+- Store keys in vaults
+- Encrypt data at rest
+
+---
+
+## My Golden Rule
+
+> *"If it's sensitive, encrypt it. If you're not sure, encrypt it anyway."*
+
+---
+
+**Day 32 Complete**
