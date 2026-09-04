@@ -1468,3 +1468,40 @@ Cryptographic failures happen when encryption is weak, missing, or misconfigured
 ---
 
 **Day 32 Complete**
+
+
+
+# TitanSEC — Day 33: Software Supply Chain Failures
+
+**Date:** September 4, 2026  
+**Topic:** OWASP Top 10:2025 — A03 Software Supply Chain Failures  
+**Mode:** Theory + Adversarial Analysis  
+**Lab:** None — VPS unavailable
+
+---
+
+## What I Learned
+
+- Software supply chain = the ecosystem/process used to build, distribute and update software
+- Direct dependency = explicitly used by the project
+- Transitive dependency = brought in indirectly by another dependency
+- Dependency confusion = manipulating package resolution to select a malicious package
+- Typosquatting = deceptive misspelled/look-alike package names
+- Vulnerable dependency = legitimate software with a security weakness
+- Malicious dependency = intentionally malicious or compromised software
+- CI/CD is security-sensitive because it builds, releases, and deploys software
+- SBOM = Software Bill of Materials — an inventory of components
+- Hash = cryptographic fingerprint, not encryption
+- Digital signature = private key mechanism verified with a public key
+- Software provenance = where an artifact came from and how it was produced
+- Developer workstations can be supply-chain boundaries
+- Separation of duties prevents one identity from having unrestricted control
+- Supply-chain evidence includes Git history, CI/CD logs, SBOMs, and cloud audit logs
+
+## Key Takeaway
+
+The application is not the only attack surface. The systems, dependencies and processes used to build and deliver software can also become the attack path.
+
+## Lab Status
+
+No lab completed because the Windows VPS was temporarily unavailable. Theory and adversarial analysis were completed instead. All attack scenarios are theoretical and restricted to authorized security research/training.
