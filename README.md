@@ -1505,3 +1505,68 @@ The application is not the only attack surface. The systems, dependencies and pr
 ## Lab Status
 
 No lab completed because the Windows VPS was temporarily unavailable. Theory and adversarial analysis were completed instead. All attack scenarios are theoretical and restricted to authorized security research/training.
+
+# Day 34 — OWASP Top 10:2025 A08: Software or Data Integrity Failures
+
+## What I Learned
+Integrity means ensuring software, code, and data remain accurate, trusted, and protected from unauthorized modification.
+
+Key distinction:
+- Confidentiality = who can SEE the data?
+- Integrity = who can CHANGE the data?
+- Availability = can the system/data be USED?
+
+A08:2025 focuses on situations where software or data is treated as trusted without properly verifying its integrity. This includes CI/CD pipelines, software updates, libraries/plugins, artifacts, serialized data, and critical application data.
+
+## Important Concepts
+- A hash such as SHA-256 can detect whether something changed, but a hash alone does not prove who created it.
+- Digital signatures can help verify both integrity and the expected source of software/data.
+- A compromised CI/CD pipeline can modify an otherwise legitimate build and produce a malicious artifact.
+- Automatic updates can become dangerous when update packages are not properly verified.
+- Untrusted libraries, plugins, repositories, or artifacts can introduce malicious code.
+- Insecure deserialization occurs when untrusted serialized data is accepted and reconstructed without sufficient validation/integrity protection.
+- Data integrity can be compromised when attackers modify things such as account balances, transactions, permissions, or records.
+
+## Attack Chain
+Developer → Build → Artifact → Registry → Production
+
+Integrity can be attacked at multiple points in this chain.
+
+## Investigation Evidence
+Useful evidence includes:
+- File hashes
+- Digital signatures
+- Git history
+- CI/CD logs
+- Build artifacts
+- Registry logs
+- Deployment records
+- Database audit logs
+- API/access logs
+
+Key investigation questions:
+1. What should exist?
+2. What exists now?
+3. What changed?
+4. When did it change?
+5. Who or what changed it?
+6. How did the modified item reach production?
+
+## My Knowledge Check Corrections
+- Integrity is NOT keeping information secret; that is confidentiality.
+- Brute forcing primarily targets authentication, not integrity.
+- Sharing data with third parties without authorization is primarily a confidentiality/privacy issue.
+- Digital signatures are not about revealing device information; they provide cryptographic verification of integrity and signer authenticity.
+- Automatic updates must verify that the update came from the expected source and was not modified.
+- A compromised build pipeline can alter software even when the original source code is clean.
+
+## Attack Angle
+When analyzing an integrity failure, ask:
+WHO can modify it?
+WHAT can be modified?
+WHERE is the trust boundary?
+HOW is integrity verified?
+WHAT evidence proves the modification?
+
+## Source
+OWASP Top 10:2025 — A08: Software or Data Integrity Failures
