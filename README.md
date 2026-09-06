@@ -1570,3 +1570,127 @@ WHAT evidence proves the modification?
 
 ## Source
 OWASP Top 10:2025 — A08: Software or Data Integrity Failures
+
+
+# Day 35 — OWASP Top 10:2025 A10: Mishandling of Exceptional Conditions
+
+## What I Learned
+A10 is about how an application behaves when something unexpected happens.
+
+An exceptional condition can include:
+- Authentication/authorization failures
+- Invalid or unexpected input
+- Database/network failures
+- Transaction failures
+- Resource exhaustion
+- Unexpected application states
+
+The security issue is not simply that an error happened. The important question is how the application handles the error.
+
+## Fail Open vs Fail Closed
+
+Fail Open:
+A security check fails but the system still allows access.
+
+Example:
+Authorization cannot be verified → application grants access.
+
+Fail Closed:
+A security check fails and access is denied.
+
+Security principle:
+If authorization cannot be verified, deny access.
+
+## Error Information Leakage
+Detailed errors can expose useful information to attackers, such as:
+- Database technology/version
+- Internal hostnames/IPs
+- File paths
+- SQL queries
+- Stack traces
+- Application/framework information
+
+A safer approach is to show the user a generic error while keeping detailed technical information in internal logs.
+
+Example:
+
+User:
+"Something went wrong. Please try again."
+
+Security/Development logs:
+Detailed error, timestamp, affected service, request/transaction ID and relevant diagnostic information.
+
+## Transaction Failures
+If an operation completes only partially, the application can leave inconsistent data.
+
+Example:
+Debit account → succeeds
+Credit receiver → fails
+
+A secure implementation may need a rollback so the incomplete transaction does not leave corrupted or inconsistent state.
+
+## Resource Exhaustion
+Poor exception handling can leave resources such as memory, connections, files, or locks unreleased.
+
+Repeatedly triggering the condition can eventually exhaust resources and cause a denial of service.
+
+## Attack Perspective
+When I encounter an application error, I should ask:
+
+1. Does it fail open or fail closed?
+2. Does it reveal sensitive technical information?
+3. Does it leave corrupted or partial state?
+4. Are resources properly released?
+5. Can the error be repeatedly triggered?
+6. Does the application recover safely?
+7. What evidence is recorded for defenders?
+
+## My Knowledge Check Corrections
+
+I initially understood an exceptional condition mainly as an authentication situation where a new device/location is allowed through without proper verification.
+
+Correction:
+An exceptional condition is much broader. It is any unexpected situation the application must handle.
+
+I correctly understood that:
+- Fail-open authentication/authorization can allow unauthorized access.
+- Authorization should fail closed when verification is unavailable.
+- Detailed technical errors can help attackers with reconnaissance.
+- Developers/security teams still need detailed internal logs.
+- Rollback can undo an incomplete/failed transaction.
+
+I needed to improve my understanding of:
+- Partial transaction failures
+- Resource exhaustion caused by poor exception handling
+- Exceptional conditions occurring outside authentication
+
+## Personal Mental Model
+
+Unexpected Condition
+        ↓
+Error Handling
+        ↓
+Application State
+        ↓
+Recovery
+
+At every stage I should ask whether the failure creates a security problem.
+
+## Attack Angle
+
+An attacker does not always need to "break" the application directly.
+
+They can intentionally create unexpected situations and observe how the application reacts.
+
+The error response itself can become an attack surface.
+
+## Key Takeaway
+
+The main lesson from A10:
+
+"Don't only test what happens when everything works. Test what happens when things go wrong."
+
+A secure system should fail safely, protect its state, avoid unnecessary information leakage, release resources properly, and leave useful evidence for defenders.
+
+## Source
+OWASP Top 10:2025 — A10: Mishandling of Exceptional Conditions
