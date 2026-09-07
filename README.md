@@ -1694,3 +1694,44 @@ A secure system should fail safely, protect its state, avoid unnecessary informa
 
 ## Source
 OWASP Top 10:2025 — A10: Mishandling of Exceptional Conditions
+
+
+
+# Day 36 — OWASP Top 10:2025 A01: Broken Access Control
+
+## What I Learned
+Authentication = Who are you?
+Authorization = What are you allowed to access/do?
+
+Broken Access Control happens when a user can access data or perform actions they should not be authorized to perform.
+
+## Example
+User A:
+`/profile/100`
+
+Changes the ID to:
+`/profile/101`
+
+If User A can now access User B's information, this may be an access-control vulnerability.
+
+## Common Attack Areas
+- Accessing another user's data
+- Accessing admin functionality as a normal user
+- Changing IDs in URLs or API requests
+- Bypassing authorization checks
+- Performing actions after privileges have been removed
+
+## Security Mindset
+For every protected resource, ask:
+
+WHO is making the request?
+WHAT are they allowed to do?
+WHAT happens if they change the request?
+IS authorization actually enforced?
+
+## Key Takeaway
+Authentication proves identity.
+
+Authorization controls permissions.
+
+Broken Access Control occurs when those permissions can be bypassed or are incorrectly enforced.
