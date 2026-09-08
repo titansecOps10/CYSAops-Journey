@@ -1735,3 +1735,69 @@ Authentication proves identity.
 Authorization controls permissions.
 
 Broken Access Control occurs when those permissions can be bypassed or are incorrectly enforced.
+
+
+# Day 37 — OWASP A01: Broken Access Control
+## Practical: IDOR / BOLA Demonstration
+
+### Objective
+Demonstrate how missing object-level authorization allows one authenticated user to access another user's resource.
+
+### Practical
+Built a deliberately vulnerable API lab on Replit with fictional users and orders.
+
+Tested object ID:
+`201`
+
+### Result
+
+Vulnerable endpoint:
+`GET /api/orders/:id`
+
+Result:
+`200 OK`
+
+Returned:
+- Order ID: 201
+- Owner: Bob
+- Item: Secure Coding Workshop
+- Amount: $42.00
+
+The application returned Bob's order because the vulnerable endpoint did not perform an ownership check.
+
+### Secure Endpoint
+
+`GET /api/secure/orders/:id`
+
+Result:
+`403 Forbidden`
+
+The secure version correctly enforced ownership authorization.
+
+### What I Demonstrated
+
+Authentication alone is not enough.
+
+The application must also verify:
+
+`Is this authenticated user authorized to access THIS object?`
+
+Changing an object ID from one user's resource to another can expose unauthorized data when that check is missing.
+
+### Vulnerability
+**BOLA — Broken Object Level Authorization**
+
+Also commonly demonstrated as:
+**IDOR — Insecure Direct Object Reference**
+
+### Evidence
+Replit lab screenshots show:
+- Vulnerable endpoint → `200 OK` → Bob's order exposed
+- Secure endpoint → `403 Forbidden` → access correctly denied
+
+### Security Fix
+Perform an ownership/authorization check on every object-level request before returning or modifying the resource.
+
+### Lab
+Replit demo:
+https://2732b00c-2a01-4e68-a34b-a0abd23aee44-00-1nl0puzt2pjur.worf.replit.dev/
