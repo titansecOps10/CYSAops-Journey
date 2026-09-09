@@ -1801,3 +1801,114 @@ Perform an ownership/authorization check on every object-level request before re
 ### Lab
 Replit demo:
 https://2732b00c-2a01-4e68-a34b-a0abd23aee44-00-1nl0puzt2pjur.worf.replit.dev/
+
+
+# Day 38 — OWASP A01: Broken Access Control — BFLA
+
+## Topic
+Broken Function Level Authorization (BFLA)
+
+## What I learned
+BFLA occurs when an application/API allows a user to access or execute a function that their role or permissions should not allow.
+
+Authentication answers:
+"Who are you?"
+
+Authorization answers:
+"What are you allowed to do?"
+
+A user can be properly authenticated but still be unauthorized to execute privileged functions.
+
+Example:
+
+Normal user → GET /api/profile       → ALLOWED
+Normal user → GET /api/admin/logs    → SHOULD BE DENIED
+Normal user → DELETE /api/users/2    → SHOULD BE DENIED
+
+## BOLA vs BFLA
+
+BOLA:
+Tests access to a specific object/resource that the user should not access.
+
+Example:
+User A changes:
+GET /api/orders/101
+to:
+GET /api/orders/201
+
+BFLA:
+Tests whether a user can execute a function/action reserved for another privilege level.
+
+Example:
+A normal user directly calls:
+DELETE /api/users/2
+or:
+GET /api/admin/logs
+
+## Lab Status
+
+Planned a controlled Node.js/Express BFLA lab with:
+
+- Alice = normal user
+- Admin = administrator
+- Normal profile endpoint
+- Admin logs endpoint
+- User deletion function
+
+The vulnerable design intentionally included authentication without the required role/permission checks.
+
+The lab could not be executed today because I reached my Replit usage limit.
+
+No exploitation evidence was claimed because the vulnerable operation was not actually run.
+
+## Expected Vulnerability
+
+If Alice, authenticated only as a normal user, can successfully execute an administrative function and receives a successful response such as HTTP 200, that would demonstrate broken function-level authorization.
+
+A properly protected privileged function should reject Alice's request, typically with HTTP 403 Forbidden when she is authenticated but lacks the required permission.
+
+## Security Lesson
+
+Hiding an admin button in the frontend is not authorization.
+
+The server/API must enforce the permission.
+
+Function-level access should be explicitly restricted to users with the required permissions and least privilege should be applied.
+
+## Attack Angle
+
+Trust boundary:
+Normal user → privileged function
+
+Question:
+"Does the server actually verify my privilege before executing this function?"
+
+Potential attack paths:
+- Directly requesting admin endpoints
+- Force browsing hidden functions
+- Changing HTTP methods
+- Testing privileged endpoints with lower-privilege credentials
+- Looking for inconsistent authorization between endpoints
+
+## Lab Evidence
+
+Status: NOT EXECUTED TODAY
+
+Reason:
+Replit usage limit reached.
+
+Next step:
+Resume the controlled BFLA lab when the environment is available, then capture:
+1. Normal-user request
+2. Vulnerable response
+3. Authorization failure
+4. Secure response after the fix
+5. Retest evidence
+
+## Reference
+
+OWASP API Security Top 10:2023
+API5: Broken Function Level Authorization
+
+OWASP Web Security Testing Guide:
+WSTG-APIT-04
