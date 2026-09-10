@@ -1,4 +1,4 @@
-# CYSAops-Journey
+8# CYSAops-Journey
 Documenting my cyber security roadmap 
 
 
@@ -1912,3 +1912,141 @@ API5: Broken Function Level Authorization
 
 OWASP Web Security Testing Guide:
 WSTG-APIT-04
+
+
+# Day 38 — OWASP A01 Broken Access Control — BFLA
+
+## Topic
+Broken Function Level Authorization (BFLA)
+
+## What I learned
+
+BFLA occurs when an application/API allows a user to execute a function or operation that their role or permissions should not allow.
+
+Authentication answers:
+"Who are you?"
+
+Authorization answers:
+"What are you allowed to do?"
+
+A user can be properly authenticated while still being unauthorized to execute privileged functions.
+
+Example:
+
+Normal user → GET /api/profile       → ALLOWED
+Normal user → GET /api/admin/logs    → SHOULD BE DENIED
+Normal user → DELETE /api/users/2    → SHOULD BE DENIED
+
+## BOLA vs BFLA
+
+BOLA:
+"Which object can I access?"
+
+Example:
+Changing:
+
+GET /api/orders/101
+
+to:
+
+GET /api/orders/201
+
+to access another user's object.
+
+BFLA:
+"Which function/action can I perform?"
+
+Example:
+A normal user directly calls:
+
+GET /api/admin/logs
+
+or:
+
+DELETE /api/users/2
+
+when those functions are restricted to administrators.
+
+Important distinction:
+BOLA focuses on unauthorized access to a specific object.
+BFLA focuses on unauthorized execution of a function or operation.
+
+## Knowledge Check
+
+1. A normal user receiving a successful response from an admin-only endpoint is an authorization failure.
+
+2. Hiding an admin button in the frontend is not authorization because the user can still construct the request directly.
+
+3. A DELETE operation involving a specific object can involve BOLA, but when the security question is whether the user is allowed to execute the privileged DELETE function, the focus is BFLA.
+
+4. A server-side role check such as:
+
+if (req.user.role !== "admin") {
+    return 403;
+}
+
+is enforcing authorization.
+
+5. Different authorization results for different HTTP methods can indicate inconsistent function-level authorization.
+
+Example:
+
+GET /api/admin/reports     → 403
+POST /api/admin/reports    → 403
+DELETE /api/admin/reports  → 200
+
+This suggests that authorization may be enforced inconsistently between methods/endpoints.
+
+## Attack Angle
+
+Instead of only asking:
+
+"Is /admin protected?"
+
+Ask:
+
+"What function is this endpoint exposing, and where does the server verify that my identity is allowed to execute it?"
+
+Potential tests include:
+
+- Directly requesting privileged endpoints
+- Force browsing hidden functions
+- Testing lower-privileged credentials against admin functions
+- Trying alternative HTTP methods
+- Looking for inconsistent authorization between endpoints
+- Comparing behavior between user and admin accounts
+
+## Lab Status
+
+The planned Node.js/Express BFLA lab could not be executed because my Replit usage limit was reached.
+
+No exploitation evidence was claimed.
+
+The lab will be resumed when the environment becomes available.
+
+Planned evidence:
+
+1. Normal-user request
+2. Privileged function request
+3. Vulnerable response
+4. Authorization fix
+5. 403 response after fix
+6. Retest evidence
+
+## Security Lesson
+
+Frontend restrictions are not security boundaries.
+
+Authorization must be enforced server-side.
+
+Privileged functions should use explicit permission checks, least privilege, and consistent access-control enforcement.
+
+## Current Status
+
+Theory: COMPLETE
+Knowledge check: COMPLETE
+Adversarial reasoning: COMPLETE
+Practical lab: PENDING
+
+Next:
+Execute the controlled BFLA lab → exploit → observe → fix → retest → document.
