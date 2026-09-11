@@ -2050,3 +2050,111 @@ Practical lab: PENDING
 
 Next:
 Execute the controlled BFLA lab → exploit → observe → fix → retest → document.
+
+
+
+# Day 39 — Broken Object Property Level Authorization
+
+## Topic
+OWASP A01 — Broken Access Control
+Focus: Broken Object Property Level Authorization (BOPLA)
+
+## What I learned
+
+Property-level authorization asks two separate questions:
+
+1. Can the user READ a particular property?
+2. Can the user MODIFY a particular property?
+
+A user may be authorized to modify their email address but not privileged properties such as:
+- role
+- account balance
+- permissions
+- discount
+- access level
+
+The vulnerability occurs when the server accepts properties that the authenticated user should not be allowed to control.
+
+## Mass Assignment
+
+Mass assignment occurs when an application automatically maps client-supplied parameters to an internal object without properly restricting which properties the user is allowed to modify.
+
+Example:
+
+Normal request:
+{
+  "email": "user@example.com"
+}
+
+Potentially dangerous request:
+{
+  "email": "user@example.com",
+  "role": "admin"
+}
+
+The problem is not that the user can see the "role" property.
+
+The problem is that the server may allow the user to CONTROL a privileged property they should not be authorized to modify.
+
+## Read vs Write
+
+READ:
+"Am I allowed to see this property?"
+
+WRITE:
+"Am I allowed to change this property?"
+
+These must be considered separately.
+
+## Practical Lab
+
+PortSwigger Web Security Academy:
+"Exploiting a mass assignment vulnerability"
+
+Lab target:
+Lightweight "l33t" Leather Jacket
+
+Planned investigation:
+- Inspect API requests.
+- Compare GET and POST responses.
+- Identify hidden parameters.
+- Test whether the hidden property is accepted.
+- Determine whether the server processes the property.
+- Exploit the property-level authorization weakness.
+- Document evidence and the security impact.
+
+## Current Status
+
+LAB NOT COMPLETED.
+
+PortSwigger lab was opened successfully, and the Leather Jacket was added to the basket.
+
+Burp Suite is not currently installed.
+VPS access is temporarily unavailable because the VPS subscription has not yet been renewed.
+
+Therefore, no exploit evidence or successful lab completion is claimed.
+
+## Key Takeaway
+
+Authentication does not automatically mean a user is authorized to control every property associated with their account.
+
+The server must explicitly enforce which properties each user is allowed to read or modify.
+
+## Next Step
+
+When VPS access is restored:
+1. Install Burp Suite Community Edition.
+2. Capture the PortSwigger lab traffic.
+3. Investigate the /api/checkout requests.
+4. Identify the hidden property.
+5. Test it in Repeater.
+6. Complete the lab.
+7. Record the HTTP evidence and final result.
+
+## Attack Angle
+
+Ask:
+
+"What properties does the client control that the server should control?"
+
+This is the core question for property-level authorization and mass assignment.
