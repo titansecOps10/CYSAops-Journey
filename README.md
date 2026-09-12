@@ -2158,3 +2158,137 @@ Ask:
 "What properties does the client control that the server should control?"
 
 This is the core question for property-level authorization and mass assignment.
+
+
+# Day 39 — Broken Object Property Level Authorization
+
+## Topic
+OWASP A01 — Broken Access Control
+Focus: Broken Object Property Level Authorization (BOPLA)
+
+## Core Concept
+
+Property-level authorization asks:
+
+1. What properties can a user READ?
+2. What properties can a user MODIFY?
+
+Being authorized to modify one property does not mean the user is authorized to modify every property.
+
+Example:
+
+Allowed:
+email → change ✅
+
+Not allowed:
+role → change ❌
+balance → change ❌
+permissions → change ❌
+
+If the server allows a normal user to modify a privileged property, this can become a property-level authorization vulnerability.
+
+## Mass Assignment
+
+Mass assignment occurs when an application automatically maps
+client-supplied parameters to internal object properties without
+properly restricting which properties the user is allowed to control.
+
+Example:
+
+Normal request:
+
+{
+  "email": "user@example.com"
+}
+
+Potentially dangerous request:
+
+{
+  "email": "user@example.com",
+  "role": "admin"
+}
+
+The problem is not simply that the property exists.
+
+The problem is that the server allows the client to control a
+property that should be protected.
+
+## Read vs Write
+
+READ:
+"Am I allowed to see this property?"
+
+WRITE:
+"Am I allowed to change this property?"
+
+These are separate authorization decisions.
+
+## Today's Practical Lab
+
+Platform:
+PortSwigger Web Security Academy
+
+Lab:
+"Exploiting a mass assignment vulnerability"
+
+Target:
+Lightweight "l33t" Leather Jacket
+
+Objective:
+Identify a hidden API property and determine whether the server
+allows the client to control it.
+
+## Current Status
+
+Lab opened successfully.
+
+Leather Jacket added to the basket.
+
+Lab is NOT completed yet.
+
+Burp Suite is not currently available because VPS access has not
+yet been renewed.
+
+No exploit or successful completion is claimed.
+
+## Key Takeaway
+
+Authentication answers:
+
+"Who are you?"
+
+Authorization answers:
+
+"What are you allowed to do?"
+
+Property-level authorization asks:
+
+"Which specific properties are you allowed to read or change?"
+
+## Attack Angle
+
+When examining an API, ask:
+
+"What properties does the client control that should actually be
+controlled by the server?"
+
+## Next Practical Step
+
+When Burp/VPS access is available:
+
+1. Capture the checkout requests.
+2. Compare GET and POST responses.
+3. Identify the hidden property.
+4. Test whether the server accepts it.
+5. Observe the response.
+6. Complete the lab.
+7. Document the evidence and remediation.
+
+## Progress
+
+Day 39 — THEORY COMPLETE
+Practical lab — PENDING
+
+BOLA → Object
+BFLA → Function
+BOPLA → Property
