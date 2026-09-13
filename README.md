@@ -2292,3 +2292,5 @@ Practical lab — PENDING
 BOLA → Object
 BFLA → Function
 BOPLA → Property
+
+Day 40, Unprotected Admin Functionality. assignment done in weekly assignments section
