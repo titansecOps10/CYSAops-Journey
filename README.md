@@ -2294,3 +2294,220 @@ BFLA → Function
 BOPLA → Property
 
 Day 40, Unprotected Admin Functionality. assignment done in weekly assignments section
+
+
+# Day 41 — Sessions, JWT & Authentication
+
+## Focus
+Authentication, sessions, cookies, JWT, and MFA bypass concepts.
+
+## Curriculum Alignment
+Week 14 — Sessions, JWT & Authentication
+- Theory: Sessions, cookies, JWT, OAuth/OIDC fundamentals
+- Hands-on: Build vulnerable authentication system
+- Adversarial challenge: Controlled token/session abuse
+- Expected evidence: Token lifecycle evidence
+- GitHub: Auth Lab
+- Difficulty: 4/5
+- Skills: Authentication
+
+Source: TITANSEC 12-Month Security Engineering Apprenticeship
+[Curriculum source: Week 14]
+
+## Theory Learned
+
+### Authentication
+Authentication answers:
+
+"Who are you?"
+
+Examples:
+- Username + password
+- MFA
+- Passkeys
+- Certificates
+- OAuth/OIDC authentication
+
+### Authorization
+Authorization answers:
+
+"What are you allowed to do?"
+
+Authentication and authorization are separate security controls.
+
+### Session
+A session represents an authenticated user's state across multiple HTTP requests.
+
+A typical flow:
+
+1. User submits credentials.
+2. Server verifies credentials.
+3. Server creates an authenticated session.
+4. Browser receives a session identifier, commonly through a cookie.
+5. Browser sends the session identifier with subsequent requests.
+6. Server uses it to determine the authenticated user.
+
+### Cookies
+Cookies can store session identifiers in the browser.
+
+Important security attributes include:
+
+- Secure — cookie should only be sent over HTTPS.
+- HttpOnly — JavaScript cannot directly access the cookie.
+- SameSite — controls cross-site cookie sending behavior.
+
+### JWT
+JSON Web Token (JWT) is a token format commonly used to carry claims.
+
+Typical structure:
+
+HEADER.PAYLOAD.SIGNATURE
+
+The payload may contain claims such as:
+- user identity
+- issuer
+- expiration
+- roles/scopes
+
+JWT payload data is encoded, not automatically encrypted.
+
+Security depends on correct validation of:
+- signature
+- algorithm
+- issuer
+- audience
+- expiration
+- required claims
+
+## Practical Lab Attempt
+
+Platform:
+PortSwigger Web Security Academy
+
+Lab:
+2FA Simple Bypass
+
+Credentials supplied by the authorized training lab:
+- wiener:peter
+- carlos:montoya
+
+### Completed
+
+Successfully authenticated as `wiener` through the normal 2FA flow.
+
+Observed:
+- Login
+- 2FA verification
+- My Account page
+
+### Attack Attempt
+
+Logged in as Carlos and reached the 2FA stage.
+
+The intended test was to attempt direct navigation to:
+
+`/my-account`
+
+without completing the second authentication factor.
+
+### Result
+
+The lab instance repeatedly returned:
+
+`Server Error: Gateway Timeout (0)`
+
+The expected Carlos account page did not load.
+
+Therefore:
+
+- 2FA bypass: NOT VERIFIED
+- Lab solved: NO
+- Exploit success: NOT CLAIMED
+- Evidence: Gateway Timeout only
+- Lab status: PENDING REVISIT
+
+## Security Lesson
+
+A 2FA bypass can occur when an application establishes an authenticated state after the first authentication step but fails to properly enforce completion of the second factor before granting access to protected resources.
+
+The important security boundary is therefore:
+
+Password authentication
+        ↓
+Second-factor verification
+        ↓
+Authenticated session
+        ↓
+Protected resources
+
+The application must not allow the user to skip the second-factor verification and reach protected resources.
+
+## Attack Surface
+
+Future testing should examine:
+
+- Session creation before MFA completion
+- Session state transitions
+- Direct access to authenticated endpoints
+- MFA verification enforcement
+- Session invalidation
+- Session fixation
+- Session expiration
+- Cookie security
+- JWT validation
+- Token lifetime
+- Authentication/authorization boundary
+
+## Evidence Status
+
+Normal authentication flow: COMPLETE
+
+2FA bypass attempt: ATTEMPTED
+
+Successful bypass evidence: NOT AVAILABLE
+
+Lab infrastructure response: GATEWAY TIMEOUT
+
+## Revisit Plan
+
+Sunday:
+1. Reopen the 2FA Simple Bypass lab.
+2. Repeat the test against a fresh lab instance.
+3. Capture the complete request/response flow.
+4. Confirm whether `/my-account` is accessible before 2FA completion.
+5. Document the actual result.
+6. Continue into session/JWT testing if the environment works.
+
+## Key Terms
+
+Authentication — Verifying a user's identity.
+
+Authorization — Determining what an authenticated user is permitted to access or perform.
+
+MFA — Multi-Factor Authentication; authentication using multiple independent factors.
+
+2FA — Two-Factor Authentication; a form of MFA using two authentication factors.
+
+Session — Server/application state representing an authenticated user's interaction.
+
+Session ID — Identifier used to associate requests with a user's session.
+
+Cookie — Browser-stored data that can be used to maintain session state.
+
+JWT — JSON Web Token; a compact token format containing claims.
+
+Claim — A piece of information/assertion contained in a token.
+
+OAuth — Authorization framework commonly used for delegated access.
+
+OIDC — OpenID Connect; an authentication layer built on OAuth 2.0.
+
+## Day 41 Status
+
+THEORY: COMPLETE
+PRACTICAL: ATTEMPTED
+EXPLOIT: NOT VERIFIED
+LAB: PENDING
+DOCUMENTATION: COMPLETE
+
+No false exploit claim made.
