@@ -1,4 +1,4 @@
-8# CYSAops-Journey
+# CYSAops-Journey
 Documenting my cyber security roadmap 
 
 
@@ -2511,3 +2511,323 @@ LAB: PENDING
 DOCUMENTATION: COMPLETE
 
 No false exploit claim made.
+
+
+
+# Day 42 — Session Security & Authentication State
+
+## Focus
+
+Understanding the lifecycle of authenticated sessions and identifying security boundaries between login, MFA, session management, authorization, and logout.
+
+## Curriculum Alignment
+
+Week 14 — Sessions, JWT & Authentication
+
+Curriculum requirements:
+- Sessions
+- Cookies
+- JWT
+- OAuth/OIDC fundamentals
+- Controlled token/session abuse
+- Token lifecycle evidence
+
+Source:
+TITANSEC 12-Month Security Engineering Apprenticeship — Week 14
+
+## Core Concept
+
+Authentication is not a single event.
+
+A secure application moves through multiple security states:
+
+LOGIN
+  ↓
+PASSWORD VERIFICATION
+  ↓
+MFA
+  ↓
+SESSION CREATION
+  ↓
+SESSION VALIDATION
+  ↓
+AUTHORIZATION
+  ↓
+RESOURCE ACCESS
+  ↓
+PASSWORD / MFA CHANGES
+  ↓
+LOGOUT
+  ↓
+SESSION INVALIDATION
+  ↓
+SESSION EXPIRATION
+
+Each transition represents a potential security boundary.
+
+## Authentication
+
+Authentication answers:
+
+"Who are you?"
+
+Examples:
+- Password authentication
+- MFA
+- Passkeys
+- Certificates
+- Federated authentication
+
+A failure in credential verification is an authentication failure.
+
+## MFA
+
+Multi-Factor Authentication adds another authentication factor after the initial credential verification.
+
+Expected security model:
+
+Password ✓
+    ↓
+MFA ✓
+    ↓
+Fully authenticated session
+    ↓
+Protected resources
+
+If an application allows protected resources to be accessed before MFA completion, the authentication boundary may be broken.
+
+This connects directly to the Day 41 PortSwigger 2FA Simple Bypass lab attempt.
+
+## Session
+
+A session represents authenticated state between the client and application.
+
+After successful authentication, the server may issue a session identifier.
+
+Conceptual flow:
+
+Browser
+  ↓
+Session identifier
+  ↓
+Server
+  ↓
+Authenticated identity
+
+The password normally does not need to be submitted with every request.
+
+Instead, the application uses the session credential to associate subsequent requests with the authenticated user.
+
+## Cookies
+
+Cookies are commonly used to transport session identifiers between the browser and web application.
+
+Important cookie security attributes include:
+
+- Secure
+- HttpOnly
+- SameSite
+
+A browser tab does NOT necessarily represent a separate session.
+
+Multiple tabs for the same website can share the browser profile's cookies and therefore share authentication state.
+
+Closing a tab is therefore not equivalent to logging out.
+
+## Session Security Attack Surface
+
+### Session Creation
+
+Questions:
+
+- When is the authenticated session created?
+- Is it created before or after MFA?
+- Is the session identifier regenerated after authentication?
+- Does authentication state correctly reflect MFA completion?
+
+### Session Validation
+
+Questions:
+
+- Does the server validate the session on every protected request?
+- Does the session correspond to the correct user?
+- Can an expired or invalidated session still access protected resources?
+
+### Session Fixation
+
+A session fixation vulnerability can occur when an attacker can cause a victim to authenticate using a session identifier known to the attacker.
+
+Security principle:
+
+Regenerate session identifiers when authentication or privilege state changes.
+
+### Session Termination
+
+Logout should cause appropriate server-side invalidation of the authenticated session.
+
+Security question:
+
+Does the old session remain usable after logout?
+
+### Session Expiration
+
+Security questions:
+
+- What happens after inactivity?
+- What happens after long periods?
+- Can stale sessions remain valid indefinitely?
+- Are sensitive actions capable of triggering reauthentication?
+
+## Authorization
+
+Authorization answers:
+
+"What is this authenticated user allowed to do?"
+
+Example:
+
+USER
+  ↓
+GET /my-account → ALLOW
+
+USER
+  ↓
+GET /admin → DENY
+
+Authorization failures include:
+- IDOR/BOLA
+- BFLA
+- Property-level authorization failures
+- Privilege escalation
+
+Authorization must be enforced server-side.
+
+## Browser Session Observation
+
+A browser can maintain authentication state even after a specific tab is closed.
+
+Conceptually:
+
+Chrome profile
+    ↓
+Cookie/session storage
+    ↓
+Authenticated website
+
+Multiple tabs may therefore use the same authentication state.
+
+Security implication:
+
+The security of the device and browser profile becomes part of the security of the authenticated accounts.
+
+An unlocked or compromised device can expose authenticated sessions even when the user is not actively interacting with the website.
+
+## Day 41 Connection
+
+Day 41 studied MFA enforcement using the PortSwigger 2FA Simple Bypass lab.
+
+The intended security boundary was:
+
+Password authentication
+    ↓
+2FA verification
+    ↓
+Authenticated session
+    ↓
+Protected account
+
+The lab attempt was not successfully completed because the PortSwigger lab instance repeatedly returned a Gateway Timeout.
+
+No successful exploit is claimed.
+
+## Day 42 Security Questions
+
+For any authentication system, ask:
+
+1. When does authentication begin?
+2. When is authentication considered complete?
+3. When is the session created?
+4. What proves the session belongs to the correct user?
+5. Is MFA enforced before protected resources are available?
+6. How is the session validated?
+7. How is authorization enforced?
+8. What happens when the password changes?
+9. What happens when MFA changes?
+10. What happens when the user logs out?
+11. What happens when the session expires?
+12. Can old authentication state remain valid?
+
+## Attack Surface Model
+
+LOGIN
+→ Authentication failure
+
+MFA
+→ MFA bypass
+
+SESSION CREATION
+→ Session fixation / incorrect authentication state
+
+SESSION VALIDATION
+→ Session hijacking / invalid session acceptance
+
+AUTHORIZATION
+→ IDOR / BOLA / BFLA / privilege escalation
+
+RESOURCE ACCESS
+→ Unauthorized access
+
+PASSWORD / MFA CHANGE
+→ Stale-session or reauthentication weaknesses
+
+LOGOUT
+→ Session invalidation failure
+
+EXPIRATION
+→ Excessively long-lived sessions
+
+## Practical Status
+
+Theory: COMPLETE
+
+Session lifecycle understanding: COMPLETE
+
+Browser/session relationship: UNDERSTOOD
+
+Practical exploitation: PENDING
+
+PortSwigger authentication labs: REVISIT SUNDAY
+
+## Key Terms
+
+Authentication — Verifying a user's identity.
+
+Authorization — Determining what an authenticated identity is permitted to access or perform.
+
+MFA — Multi-Factor Authentication.
+
+2FA — Two-Factor Authentication, a type of MFA using two authentication factors.
+
+Session — Authenticated state maintained between a client and application.
+
+Session ID — Identifier associated with an application session.
+
+Cookie — Browser-stored data commonly used to maintain web session state.
+
+Session fixation — Attack involving a session identifier that an attacker can cause a victim to use.
+
+Session invalidation — Making a session credential no longer valid.
+
+Session expiration — Ending a session after a defined lifetime or inactivity period.
+
+JWT — JSON Web Token, a structured token format commonly used to carry claims.
+
+## Evidence
+
+No exploit evidence claimed for Day 42.
+
+Primary evidence:
+- Session lifecycle analysis
+- Authentication-state model
+- Browser/session reasoning
+- Security-boundary analysis
