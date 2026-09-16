@@ -2831,3 +2831,77 @@ Primary evidence:
 - Authentication-state model
 - Browser/session reasoning
 - Security-boundary analysis
+
+
+# Day 43 — JWT Fundamentals & Trust
+
+## Objective
+Understand JWT structure, encoding, signatures, and the security assumptions behind JWT authentication.
+
+## Theory
+
+JWT = JSON Web Token.
+
+A JWT normally has three Base64URL-encoded parts:
+
+HEADER.PAYLOAD.SIGNATURE
+
+Header:
+- Defines token metadata and signing algorithm.
+- Common fields include `alg` and `typ`.
+
+Payload:
+- Contains claims such as user identity, role, expiration, etc.
+- The payload is normally encoded, NOT encrypted.
+- Anyone who obtains the token can decode the payload.
+
+Signature:
+- Provides integrity/authenticity evidence.
+- Changing the header or payload normally causes the original signature to become invalid.
+
+Encoding ≠ Encryption:
+- Encoding changes representation and is reversible without a secret.
+- Encryption provides confidentiality and requires a key.
+
+Valid JWT ≠ Authorized action:
+A server can successfully validate a JWT while still denying the requested action.
+Example:
+valid JWT + role=user + request to /admin → authorization should deny access.
+
+## Practical Activity
+
+Platform: PortSwigger Web Security Academy
+Lab: JWT authentication bypass via flawed signature verification
+
+Environment limitation:
+Firefox was available, but Burp/VPS was unavailable.
+
+Completed:
+- Accessed the PortSwigger JWT material.
+- Reviewed JWT structure and trust model.
+- Opened the JWT authentication lab.
+- Identified the intended authentication flow using `wiener:peter`.
+- Reviewed the intended attack path involving JWT manipulation.
+
+Not completed:
+- HTTP interception/modification.
+- JWT signature manipulation.
+- Successful authentication bypass.
+- `/admin` access.
+
+No successful exploit is claimed.
+
+## Key Security Lesson
+
+JWT security depends on the server correctly validating the token's integrity AND correctly enforcing authorization.
+
+A JWT should never be trusted merely because it is syntactically valid or decodable.
+
+## Evidence
+- PortSwigger JWT documentation
+- PortSwigger JWT authentication lab
+- Practical lab reconnaissance
+
+## Next Step
+When Burp/VPS is available:
+capture the authenticated request → inspect JWT → test controlled token manipulation → observe server behavior → document evidence → validate the defense.
