@@ -2905,3 +2905,40 @@ A JWT should never be trusted merely because it is syntactically valid or decoda
 ## Next Step
 When Burp/VPS is available:
 capture the authenticated request → inspect JWT → test controlled token manipulation → observe server behavior → document evidence → validate the defense.
+
+
+# Day 44: API Security — Beyond JWT
+
+Date: September 17, 2026
+
+---
+
+## What I Learned
+
+- APIs are the backbone of modern apps and the #1 attack surface
+- JWT is one piece of API security
+- OWASP API Top 10 exists separately from the web OWASP Top 10
+- BOLA = Broken Object Level Authorization (API version of IDOR)
+
+---
+
+## OWASP API Top 10 (Key Ones)
+
+1. BOLA - Broken Object Level Authorization
+2. Broken Authentication
+3. Broken Object Property Level Authorization
+4. Unrestricted Resource Consumption
+5. Broken Function Level Authorization
+
+---
+
+## Practical
+
+- Tested jsonplaceholder.typicode.com API
+- Changed IDs in URL to test for BOLA-style flaws
+
+---
+
+## Key Takeaway
+
+> "APIs are where the money moves. Learn to test them."
