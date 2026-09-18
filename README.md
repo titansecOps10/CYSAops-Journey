@@ -2942,3 +2942,59 @@ Date: September 17, 2026
 ## Key Takeaway
 
 > "APIs are where the money moves. Learn to test them."
+
+
+# Day 45 — JWT Attacks & Signature Verification
+
+## Objective
+Understand how flawed JWT signature verification can lead to authentication bypass.
+
+## Theory
+
+JWT security depends on the server correctly validating the token before trusting its claims.
+
+Important distinction:
+- Decoding a JWT does not validate it.
+- A valid signature does not automatically grant authorization.
+- Changing the header or payload normally invalidates the original signature.
+- `alg` specifies the cryptographic algorithm used by the JWT.
+
+A dangerous implementation flaw is accepting a JWT without a valid signature. This can allow an attacker to modify claims such as the authenticated username.
+
+## Practical Lab
+
+Platform: PortSwigger Web Security Academy
+
+Lab:
+JWT authentication bypass via flawed signature verification
+
+Completed:
+- Accessed the lab.
+- Authenticated successfully as `wiener:peter`.
+- Reached `/my-account`.
+- Confirmed the lab environment is functioning.
+
+Limitation:
+Firefox Android did not expose the authenticated HTTP request/JWT cookie required for the next stage.
+
+Therefore:
+- JWT modification was not performed.
+- `/admin` was not accessed.
+- The lab was NOT marked as solved.
+
+## Intended Attack Chain
+
+Capture request → extract JWT → modify claims → test signature verification → request `/admin` → validate authorization behavior.
+
+## Key Lesson
+
+The security boundary is not simply:
+
+"Can the application decode this JWT?"
+
+It is:
+
+"Has the application correctly verified the token's integrity, validity, and authorization before trusting its claims?"
+
+## Source
+PortSwigger Web Security Academy — JWT attacks and JWT authentication bypass lab.
