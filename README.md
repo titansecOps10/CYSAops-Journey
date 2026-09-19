@@ -2998,3 +2998,117 @@ It is:
 
 ## Source
 PortSwigger Web Security Academy — JWT attacks and JWT authentication bypass lab.
+
+
+Day 46 — JWT Algorithm Confusion & Authentication Metadata
+
+Objective
+
+Understand JWT algorithm confusion and how authentication systems process metadata, session credentials, and contextual signals.
+
+Core Concepts
+
+RS256
+
+Asymmetric JWT signing.
+
+- Private key → signs
+- Public key → verifies
+- Private key must remain secret
+- Public key may be distributed
+
+HS256
+
+Symmetric JWT signing.
+
+- One shared secret → signs and verifies
+- Anyone possessing the secret can potentially create valid signatures
+
+Algorithm Confusion
+
+A vulnerable implementation may allow attacker-controlled JWT metadata such as "alg" to influence how the server verifies the token.
+
+Example:
+
+RS256 → HS256
+
+If the server incorrectly treats its RSA public key as an HS256 secret, an attacker may be able to forge a JWT without possessing the RSA private key.
+
+The vulnerability is therefore an implementation/trust-boundary failure, not a failure of RSA mathematics.
+
+Authentication Metadata Case Study
+
+An Instagram-style authentication system may process:
+
+- Username/account ID
+- Email or phone number
+- IP address
+- User-Agent
+- Device/app information
+- Timestamp
+- Authentication state
+- Session identifier/token
+- MFA state
+- Location-related signals
+
+These have different security significance.
+
+Contextual metadata such as IP, device, and approximate location can support fingerprinting, anomaly detection, and account-security decisions.
+
+Authentication credentials such as passwords, session IDs, access tokens, refresh tokens, and recovery credentials are substantially more security-critical.
+
+Attack Surface
+
+Account creation
+      ↓
+Login / MFA
+      ↓
+Session creation
+      ↓
+Cookie / JWT
+      ↓
+Request metadata
+      ↓
+Session verification
+      ↓
+Authorization
+      ↓
+Private account resources
+
+An attacker does not automatically obtain account access merely by learning metadata.
+
+The critical question is:
+
+"Can this information be used to authenticate, impersonate, recover, or gain additional information about the account?"
+
+Security Principle
+
+Do not allow untrusted token metadata to determine security-critical trust decisions.
+
+Examples:
+
+- Do not blindly trust "alg".
+- Do not blindly trust attacker-controlled verification keys.
+- Treat session identifiers as secrets.
+- Validate sessions server-side.
+- Separate authentication from authorization.
+- Use contextual signals for detection rather than treating them as absolute proof of identity.
+
+Practical Status
+
+PortSwigger JWT lab:
+
+- Authenticated as "wiener:peter".
+- Reached "/my-account".
+- Lab environment confirmed.
+- Browser-only environment prevented HTTP interception and JWT manipulation.
+- No successful JWT forgery claimed.
+
+Next practical stage:
+Use Burp/Re­peater when the environment is available to inspect and manipulate the JWT inside the authorized PortSwigger lab.
+
+Sources
+
+- PortSwigger Web Security Academy — JWT attacks and algorithm confusion.
+- OWASP Session Management Cheat Sheet.
+- OWASP Authentication Cheat Sheet.
