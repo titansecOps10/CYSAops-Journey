@@ -3112,3 +3112,110 @@ Sources
 - PortSwigger Web Security Academy — JWT attacks and algorithm confusion.
 - OWASP Session Management Cheat Sheet.
 - OWASP Authentication Cheat Sheet.
+
+
+# Day 47 — Authentication Trust Boundaries & Session Security
+
+## Objective
+
+Connect authentication, session management, JWT validation, and authorization into one security model.
+
+## Core Concept
+
+Authentication answers:
+
+"Who is this user?"
+
+Session management answers:
+
+"How does the application maintain that authenticated state across requests?"
+
+Authorization answers:
+
+"What is this authenticated user allowed to access or perform?"
+
+These are related but separate security functions.
+
+## Security Flow
+
+LOGIN
+  ↓
+Authentication
+  ↓
+Authenticated session / JWT
+  ↓
+Credential presented with requests
+  ↓
+Token/session validation
+  ↓
+Authorization
+  ↓
+Protected resource
+
+## Important Distinction
+
+A valid JWT signature proves that the token's cryptographic integrity and authenticity checks succeeded according to the application's verification process.
+
+It does NOT automatically mean:
+
+- the user can access every resource
+- the user has administrator privileges
+- the requested action is authorized
+- the token is appropriate for the requested endpoint
+
+Authentication and authorization must therefore be enforced separately.
+
+## Session Security
+
+A session identifier/token represents authenticated state and must be protected accordingly.
+
+Important controls include:
+
+- Secure session identifiers
+- HTTPS/TLS
+- Secure and HttpOnly cookie attributes where cookies are used
+- Appropriate SameSite configuration
+- Session expiration
+- Session invalidation on logout
+- Session ID regeneration after authentication or privilege changes
+- Strong, unpredictable session identifiers
+- Server-side validation of session state
+
+## Session Fixation
+
+Session fixation occurs when an attacker can cause a victim to authenticate using a session identifier that the attacker already knows.
+
+A major defense is regenerating the session identifier when authentication or another privilege-level change occurs.
+
+## Key Security Principle
+
+Cryptography can correctly prove that a credential is valid while the application can still make an incorrect authorization decision.
+
+Therefore:
+
+VALID CREDENTIAL
+≠
+AUTOMATIC AUTHORIZATION
+
+## Practical Status
+
+No new exploit claimed today.
+
+This entry consolidates the authentication/session/JWT concepts developed during Days 42–46 and establishes the trust-boundary model for the next practical work.
+
+## Evidence
+
+- Previous JWT and authentication labs were accessed during Days 41–46.
+- Browser-only limitations prevented several Burp-dependent JWT exercises from being completed.
+- No successful exploit is claimed unless directly reproduced and documented.
+
+## Sources
+
+OWASP Session Management Cheat Sheet:
+https://cheatsheetseries.owasp.org/cheatsheets/Session_Management_Cheat_Sheet.html
+
+PortSwigger Web Security Academy — JWT Attacks:
+https://portswigger.net/web-security/jwt
+
+PortSwigger — Testing Session Management Mechanisms:
+https://portswigger.net/burp/documentation/desktop/testing-workflow/vulnerabilities/session-management
