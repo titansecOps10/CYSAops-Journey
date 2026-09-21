@@ -3219,3 +3219,54 @@ https://portswigger.net/web-security/jwt
 
 PortSwigger — Testing Session Management Mechanisms:
 https://portswigger.net/burp/documentation/desktop/testing-workflow/vulnerabilities/session-management
+
+
+# Day 48 — SQL Injection (SQLi)
+
+## Objective
+Understand how unsafe SQL query construction can allow user-controlled input to alter database queries.
+
+## Core Concepts
+- SQLi = SQL Injection.
+- SQLi is an application-layer vulnerability, not a network port.
+- The common root cause is dynamically building SQL with untrusted input.
+- Concatenation = joining strings together to construct one SQL query.
+- The database interprets SQL code separately from data only when the application uses safe query construction such as parameterized queries.
+
+## Architecture
+Attacker
+  ↓
+Web/API application
+  ↓
+Vulnerable SQL query
+  ↓
+Database
+
+The attacker normally interacts with the web/API layer; the application already has legitimate access to the database.
+
+## Security Impact
+Depending on the vulnerability and database permissions, SQLi can potentially allow:
+- Reading unauthorized data
+- Modifying or deleting data
+- Bypassing application logic
+- Affecting authentication/authorization
+- In some environments, further compromise through database capabilities
+
+## Defense
+Primary defense:
+- Prepared/parameterized queries
+- Least-privileged database accounts
+- Input validation as an additional control
+- Proper error handling
+- Database/network isolation
+
+## Practical Status
+VPS/lab work currently paused. No exploit was claimed or performed today.
+
+## Key Lesson
+SQLi is not "attacking port 3306."
+It is manipulating how an application constructs a database query.
+
+## Source
+TITANSEC 12-Month Security Engineering Apprenticeship — Week 15: Injection, SSRF, Files & Business Logic.
+OWASP SQL Injection Prevention Cheat Sheet.
