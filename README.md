@@ -3270,3 +3270,29 @@ It is manipulating how an application constructs a database query.
 ## Source
 TITANSEC 12-Month Security Engineering Apprenticeship — Week 15: Injection, SSRF, Files & Business Logic.
 OWASP SQL Injection Prevention Cheat Sheet.
+
+# Day 48 — 7-Day Security Revision
+
+## Objective
+Consolidate Days 42–48 without introducing a new complex topic.
+
+## Revision
+- Sessions: authentication creates a session; session credentials must be protected and invalidated appropriately.
+- JWT: Header.Payload.Signature; payload is normally encoded, not encrypted.
+- JWT verification: decoding a token does not make it trustworthy; signatures must be properly verified.
+- JWT headers: `jwk`, `jku`, and `kid` can influence key-selection/verification behavior and therefore require careful trust validation.
+- Algorithm confusion: RS256 uses a private/public key pair; HS256 uses a shared secret. The vulnerability comes from incorrect algorithm/key handling.
+- Authentication vs Authorization: proving who you are does not automatically grant permission to every resource.
+- SQL Injection: an application-layer vulnerability caused by unsafe handling of input when constructing database queries; parameterized queries are the primary defense.
+
+## Core Chain
+Identity → Authentication → Session/JWT → Verification → Authorization → Resource
+
+## Practical Status
+Revision only. No new exploit or lab claim.
+
+## Key Lesson
+Secure authentication is not one control. It is a chain of trust, and a weakness at any stage can affect the security of the resource being protected.
+
+## Source
+TITANSEC 12-Month Security Engineering Apprenticeship — Weeks 14–15.
