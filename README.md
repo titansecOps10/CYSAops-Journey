@@ -3296,3 +3296,63 @@ Secure authentication is not one control. It is a chain of trust, and a weakness
 
 ## Source
 TITANSEC 12-Month Security Engineering Apprenticeship — Weeks 14–15.
+
+
+# Day 49 — Practical SQL Injection
+
+## Objective
+Apply SQL injection concepts in an authorized PortSwigger Web Security Academy environment.
+
+## Practical Work
+
+### Lab 1 — SQLi WHERE Clause
+Status: SOLVED ✅
+
+Normal request:
+`/filter?category=Corporate+gifts`
+
+Tested:
+`'+OR+1=1--`
+
+Result:
+The application returned products outside the selected category, including hidden/unreleased products.
+
+Key observation:
+`OR 1=1` creates a condition that is always true, while `--` comments out the remainder of the SQL query.
+
+### Lab 2 — SQLi Login Bypass
+Status: ATTEMPTED / NOT SOLVED ⏸️
+
+Tested username:
+`administrator'--`
+
+Password:
+Blank
+
+Expected behavior:
+The SQL comment should remove the password condition and allow authentication as administrator.
+
+Result:
+The browser remained on the login page.
+
+Important:
+No successful bypass was claimed. PortSwigger's documented solution uses Burp Suite to intercept and modify the login request, so this lab will be revisited when proper tooling is available.
+
+## Key Lesson
+SQL injection occurs when untrusted input can alter the structure or logic of a database query.
+
+Today's practical chain:
+
+Normal input
+→ Application builds SQL
+→ User input changes SQL logic
+→ Database returns unintended results
+
+## Evidence
+- PortSwigger Lab 1: SOLVED
+- PortSwigger Lab 2: Attempted, not solved
+- Practical work performed through Firefox
+- No unauthorized targets used
+
+## Source
+PortSwigger Web Security Academy — SQL Injection Labs.
