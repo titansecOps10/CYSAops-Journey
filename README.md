@@ -3356,3 +3356,51 @@ Normal input
 
 ## Source
 PortSwigger Web Security Academy — SQL Injection Labs.
+
+
+# Day 50 — SQL Injection UNION Attack
+
+## Objective
+Determine the number of columns returned by a vulnerable SQL query using a UNION-based SQL injection in an authorized PortSwigger lab.
+
+## Practical Lab
+PortSwigger — SQL injection UNION attack, determining the number of columns returned by the query.
+
+### Tests
+
+1. `'+UNION+SELECT+NULL--`
+   Result: Internal Server Error ❌
+
+2. `'+UNION+SELECT+NULL,NULL--`
+   Result: Internal Server Error ❌
+
+3. `'+UNION+SELECT+NULL,NULL,NULL--`
+   Result: Lab solved ✅
+
+## Finding
+The vulnerable query returns **3 columns**.
+
+## What I Learned
+A UNION query must have a compatible number of columns with the original query.
+
+The practical progression is:
+
+SQLi identified
+→ Determine column count
+→ Identify useful output columns
+→ Retrieve data
+
+Today's lab stopped at column enumeration. No database contents were extracted.
+
+## Evidence
+- 1-column UNION: failed
+- 2-column UNION: failed
+- 3-column UNION: successful
+- PortSwigger Lab: SOLVED
+- Activity performed in the authorized Web Security Academy environment using Firefox.
+
+## Key Lesson
+Before using UNION SQL injection to retrieve information, determine the structure of the original query.
+
+## Source
+PortSwigger Web Security Academy — SQL Injection UNION Attacks.
