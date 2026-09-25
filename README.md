@@ -3404,3 +3404,85 @@ Before using UNION SQL injection to retrieve information, determine the structur
 
 ## Source
 PortSwigger Web Security Academy — SQL Injection UNION Attacks.
+
+
+# Day 51 — URL → Session → Account Security: IDOR/BOLA Attack & Defense
+
+## Objective
+Understand how a client-controlled object identifier can cause unauthorized access when the server fails to enforce object-level authorization.
+
+## Lab
+Controlled TitanSEC training environment using fake Alice/Bob accounts.
+
+## Attack Evidence
+Vulnerable mode:
+
+Request:
+GET /account?id=1002
+X-Lab-User: alice
+
+Response:
+HTTP 200 OK
+
+Returned:
+Account ID: 1002
+Owner: Bob
+Fake balance: 8750
+
+Result:
+VULNERABLE
+
+The server trusted the client-controlled object ID without verifying that Alice was authorized to access Bob's object.
+
+## Defense Evidence
+Secure mode:
+
+Same request:
+GET /account?id=1002
+X-Lab-User: alice
+
+Response:
+HTTP 403 Forbidden
+{ error: "Access denied" }
+
+Result:
+BLOCKED
+
+The server now authenticates the caller and checks the requested object's ownership before returning the resource.
+
+## Key Concepts
+- IDOR — Insecure Direct Object Reference
+- BOLA — Broken Object Level Authorization
+- Authentication ≠ Authorization
+- Client-controlled identifiers are input, not authority.
+- Hiding an object or changing its ID does not constitute authorization.
+- Authorization must be enforced server-side.
+
+## Lab Accounts
+Alice → account ID 1001 → fake balance 1250
+Bob → account ID 1002 → fake balance 8750
+
+## Attack → Defense
+Vulnerable:
+Alice → /account?id=1002 → Bob's object → 200 OK
+
+Patched:
+Alice → /account?id=1002 → authorization check → 403 Forbidden
+
+## Security Engineering Method
+BUILD → ATTACK → OBSERVE → DETECT → FIX → RETEST → DOCUMENT
+
+## Practical Status
+Attack reproduced successfully in the controlled lab.
+Defense verified successfully with the same request.
+No real accounts, credentials, or third-party systems were involved.
+
+## Source
+OWASP API Security — Broken Object Level Authorization:
+https://owasp.org/API-Security/
+
+PortSwigger — Access Control:
+https://portswigger.net/web-security/access-control
+
+## Next
+Redesign the lab for manual URL/request manipulation, then continue with client-controlled role manipulation and function-level authorization.
