@@ -3486,3 +3486,44 @@ https://portswigger.net/web-security/access-control
 
 ## Next
 Redesign the lab for manual URL/request manipulation, then continue with client-controlled role manipulation and function-level authorization.
+
+
+# Day 52 — Manual IDOR/BOLA Attack & Defense
+
+## Objective
+Perform a manual object-reference manipulation test and verify server-side object-level authorization.
+
+https://url-session-security-lab.higgsfield.app/?utm_source=chatgpt.com
+
+## Practical Evidence
+Controlled TitanSEC lab:
+https://url-session-security-lab.higgsfield.app
+
+1. Legitimate request:
+GET /account?id=1001
+X-Lab-User: alice
+→ 200 OK — Alice's account returned.
+
+2. Attack:
+Changed only `id=1001` → `id=1002`.
+GET /account?id=1002
+X-Lab-User: alice
+→ 200 OK — Bob's account returned.
+→ VERDICT: VULNERABLE
+
+3. Defense / Retest:
+Same request in Defense Mode.
+→ 403 Forbidden — Access denied.
+→ VERDICT: BLOCKED
+
+## Key Lesson
+IDOR occurs when a client-controlled object reference can be manipulated to access another object's data. BOLA is the underlying object-level authorization failure.
+
+Authentication answers "Who are you?"
+Authorization answers "Are you allowed to access this object?"
+
+## Defensive Control
+Authenticate the caller and enforce object ownership/authorization server-side before returning the requested object.
+
+## Status
+Completed — manual attack, observation, defensive control, and retest demonstrated in a controlled lab.
