@@ -3527,3 +3527,33 @@ Authenticate the caller and enforce object ownership/authorization server-side b
 
 ## Status
 Completed — manual attack, observation, defensive control, and retest demonstrated in a controlled lab.
+
+
+# Day 53 — Client-Controlled Role Manipulation
+
+## Objective
+Test whether a client-controlled URL parameter can influence authorization decisions.
+
+## Practical Evidence
+Controlled TitanSEC lab:
+https://url-session-security-lab.higgsfield.app
+
+Attack:
+GET /admin?role=admin
+X-Lab-User: alice
+→ 200 OK — Fake admin panel returned.
+→ VERDICT: VULNERABLE
+
+Defense / Retest:
+Same request in Defense Mode.
+→ 403 Forbidden — Admin authorization required.
+→ VERDICT: BLOCKED
+
+## Key Lesson
+Client-controlled values such as URL parameters are input, not authority. Authorization must be determined from trusted server-side identity and role state.
+
+## Defensive Control
+Ignore the client-supplied role for authorization and enforce the required role server-side.
+
+## Status
+Completed — vulnerable behavior, authorization failure, defensive control, and retest demonstrated in a controlled lab.
