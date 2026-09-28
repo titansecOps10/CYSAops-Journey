@@ -3552,6 +3552,50 @@ Same request in Defense Mode.
 ## Key Lesson
 Client-controlled values such as URL parameters are input, not authority. Authorization must be determined from trusted server-side identity and role state.
 
+
+# Day 54 — BFLA: Broken Function Level Authorization
+
+## Objective
+Test whether a normal user can directly invoke an administrative function without proper server-side authorization.
+
+## Lab
+TitanSEC Controlled Security Lab:
+https://url-session-security-lab.higgsfield.app
+
+## Attack Evidence
+Request:
+GET /admin/users
+X-Lab-User: alice
+
+Response:
+200 OK — administrative user data returned.
+
+Verdict: VULNERABLE
+
+Alice, a normal user, successfully accessed an administrative function because the endpoint failed to enforce function-level authorization.
+
+## Defense / Retest
+Same request against the protected implementation:
+
+GET /admin/users
+X-Lab-User: alice
+
+Response:
+403 Forbidden — Function-level authorization denied.
+
+Verdict: BLOCKED
+
+## Key Lesson
+BFLA occurs when a user can execute a function/action they are not authorized to perform.
+
+BOLA = unauthorized object access.
+BFLA = unauthorized function/action access.
+
+Client access restrictions or hidden UI elements are not security controls. Authorization must be enforced server-side on every protected function/endpoint.
+
+## Status
+Completed — attack, vulnerable response, server-side defense, and successful 403 retest demonstrated in a controlled lab.
+
 ## Defensive Control
 Ignore the client-supplied role for authorization and enforce the required role server-side.
 
