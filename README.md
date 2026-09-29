@@ -3601,3 +3601,39 @@ Ignore the client-supplied role for authorization and enforce the required role 
 
 ## Status
 Completed — vulnerable behavior, authorization failure, defensive control, and retest demonstrated in a controlled lab.
+
+
+
+# Day 55 — Property-Level Authorization (BOPLA)
+
+## Objective
+Test whether a normal user can modify a protected account property.
+
+## Lab
+TitanSEC Controlled Security Lab:
+https://url-session-security-lab.higgsfield.app
+
+## Attack Evidence
+PATCH /account/1001
+X-Lab-User: alice
+{"role":"admin"}
+
+→ 200 OK — role changed to `admin`
+→ VERDICT: VULNERABLE
+
+The server accepted a client-controlled protected property without enforcing property-level authorization.
+
+## Defense / Retest
+Same request in Defense Mode:
+
+→ 403 Forbidden — Property update not authorized
+→ VERDICT: BLOCKED
+
+## Key Lesson
+Property-level authorization controls which fields a user can read or modify. Client-supplied properties must not automatically become trusted authorization state.
+
+## Defensive Control
+Allowlist writable properties and enforce property-level authorization server-side.
+
+## Status
+Completed — attack, vulnerable response, defensive control, and successful 403 retest demonstrated in a controlled lab.
