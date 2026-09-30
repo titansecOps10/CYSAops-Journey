@@ -3637,3 +3637,61 @@ Allowlist writable properties and enforce property-level authorization server-si
 
 ## Status
 Completed — attack, vulnerable response, defensive control, and successful 403 retest demonstrated in a controlled lab.
+
+
+# Day 56 — Session Security Fundamentals
+
+## Objective
+Understand the difference between authentication credentials and session credentials, and understand the basic session lifecycle.
+
+## Concepts Covered
+- Password = credential used to authenticate the user.
+- Session credential = credential used by the server to recognize an already-authenticated session.
+- Session credentials can be represented through cookies or other tokens.
+- Authentication establishes identity; session management maintains authenticated state across requests; authorization determines what the authenticated user may access.
+- Browser state and server-side session state are not the same thing.
+- Minimizing a browser or leaving a page does not necessarily invalidate a session.
+- Sessions can expire because of lifetime limits, inactivity timeouts, cookie expiration, or server-side invalidation.
+- Logout should invalidate the authenticated session.
+
+## Session Lifecycle
+LOGIN
+→ Password verification
+→ Authentication succeeds
+→ Session created
+→ Session credential issued
+→ Subsequent requests present the credential
+→ Server validates the session
+→ Authorization check
+→ Resource access
+→ Logout / expiration
+→ Session invalidated
+
+## Practical Status
+Theory completed.
+
+No exploit was claimed or performed today.
+
+The practical session-abuse exercise is deferred to the next session, where the goal is to observe session credentials in HTTP requests and study controlled session-hijacking behavior in an authorized lab.
+
+## Key Lesson
+A session is not simply "the browser being open."
+
+A session is authenticated state recognized by the server through a session credential and governed by expiration/invalidation rules.
+
+A valid session credential may allow subsequent requests to be associated with the authenticated user without repeatedly submitting the password.
+
+## Evidence
+- Session lifecycle explained and documented.
+- Password vs. session credential distinction explained.
+- Logout vs. session expiration distinguished.
+- Browser state vs. server-side session state distinguished.
+- No unsupported exploit claim.
+
+## Curriculum Alignment
+Week 14 — Sessions, JWT & Authentication.
+
+The curriculum specifies sessions, cookies and JWT fundamentals, with controlled token/session abuse and token lifecycle evidence as the practical direction.
+
+## Source
+TITANSEC 12-Month Security Engineering Apprenticeship 
