@@ -3695,3 +3695,78 @@ The curriculum specifies sessions, cookies and JWT fundamentals, with controlled
 
 ## Source
 TITANSEC 12-Month Security Engineering Apprenticeship 
+
+
+# Day 57 — Security Engineering Revision
+
+## Objective
+Consolidate previously learned concepts without introducing a new topic.
+
+## Revision Scope
+- Authentication vs Authorization
+- IDOR / BOLA
+- BFLA
+- Property-Level Authorization / BOPLA
+- Sessions and session credentials
+- Cookies and session state
+- JWT fundamentals
+- SQL Injection
+- Session expiration and logout
+
+## Key Lessons
+
+Authentication:
+Determines who the user is.
+
+Authorization:
+Determines what the authenticated user is allowed to do.
+
+BOLA / IDOR:
+Occurs when a user can access an object they are not authorized to access because the application fails to enforce object-level authorization.
+
+BFLA:
+Occurs when a user can directly invoke a function or endpoint they are not authorized to use.
+
+Property-Level Authorization:
+Controls which individual properties/fields a user is allowed to read or modify. Client-supplied protected properties must not automatically become trusted authorization state.
+
+Session:
+Represents authenticated state maintained across multiple HTTP requests.
+
+Session Credential:
+A cookie, token, or other credential that allows the server to associate subsequent requests with an authenticated session.
+
+JWT:
+A JWT payload is normally encoded rather than encrypted. Its signature provides cryptographic integrity/authenticity evidence, but a valid JWT does not automatically authorize every action.
+
+SQL Injection:
+An application-layer vulnerability where attacker-controlled input can alter the structure or behavior of a vulnerable SQL query.
+
+Session Expiration:
+A session can become invalid because of expiration, inactivity timeout, cookie expiration, or server-side invalidation. Minimizing or leaving a browser open/closed does not by itself define whether the server still considers the session valid.
+
+Logout:
+A properly implemented logout should invalidate the authenticated session.
+
+## Practical Status
+Revision only.
+
+No new exploit or attack was performed.
+
+No unsupported practical evidence was claimed.
+
+## Evidence
+Conceptual understanding consolidated across previous authorized labs and exercises, including:
+- IDOR/BOLA attack → 403 defensive retest
+- BFLA attack → 403 defensive retest
+- Property authorization attack → 403 defensive retest
+- SQL injection labs
+- JWT/session security theory
+
+## Key Principle
+Understand → Build → Break → Observe → Detect → Fix → Retest → Document.
+
+Today focused on the "Understand / Consolidate" stage.
+
+## Status
+Completed — revision session.
