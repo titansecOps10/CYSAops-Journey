@@ -3770,3 +3770,38 @@ Today focused on the "Understand / Consolidate" stage.
 
 ## Status
 Completed — revision session.
+
+
+# Day 58 — Session Security Revision
+
+## Objective
+Review session credentials, session lifecycle, and session hijacking fundamentals.
+
+## Key Lessons
+- A password is used to authenticate the user.
+- A session credential/session ID is used by the server to recognize an already-authenticated session.
+- A valid session credential may allow subsequent requests to be associated with the authenticated user.
+- A session credential does not simply reveal what page a user is currently viewing.
+- Closing a browser does not necessarily invalidate the server-side session.
+- Logout should invalidate the session, but sessions can also become invalid through expiration, timeout, cookie expiration, or server-side invalidation.
+- A stolen valid session credential can potentially allow session impersonation without knowing the user's password.
+
+## Revision Result
+Corrected the distinction between:
+Password → establishes authentication.
+Session credential → maintains authenticated state across requests.
+
+Also clarified:
+Browser state ≠ server-side session state.
+
+## Practical Status
+Revision only.
+
+No new exploit was performed and no unsupported attack evidence was claimed.
+
+## Curriculum Alignment
+Week 14 — Sessions, JWT & Authentication.
+Focus: sessions, cookies, JWT fundamentals, and token/session lifecycle evidence.
+
+## Status
+Completed — short revision session.
