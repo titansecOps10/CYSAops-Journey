@@ -3805,3 +3805,53 @@ Focus: sessions, cookies, JWT fundamentals, and token/session lifecycle evidence
 
 ## Status
 Completed — short revision session.
+
+
+# Day 59 — Session Security: Session Credential & HTTP Request
+
+## Objective
+Understand how a session credential is associated with an authenticated user and how it is used on subsequent requests.
+
+## Key Lessons
+- `ABC123` represents a session credential/session identifier.
+- The server authenticates Alice first, then creates a session and associates the session identifier with Alice's authenticated session.
+- The session ID is not simply derived from Alice's password.
+- A subsequent request containing `Cookie: session=ABC123` allows the server to look up the associated session.
+- An invalid or expired session credential is rejected; whether all of a user's sessions are invalidated depends on the application's session-management design.
+- A valid stolen session credential may allow an attacker to act within that authenticated session without repeating the original password/MFA flow.
+- Session security therefore depends on protecting the credential and correctly enforcing expiration and invalidation.
+
+## Session Flow
+
+LOGIN
+→ Credentials verified
+→ Server identifies Alice
+→ Session created
+→ Session ID generated
+→ Session ID associated with Alice
+→ Browser stores credential
+→ Subsequent requests present credential
+→ Server validates session
+→ Request proceeds or is denied
+
+## Practical Status
+Theory and request-flow reasoning completed.
+
+No real account, credential, or unauthorized session was accessed.
+
+No unsupported exploit claim was made.
+
+## Key Correction
+A session credential does not inherently contain Alice's identity.
+
+The server maintains the association:
+
+`ABC123 → Alice's authenticated session`
+
+## Curriculum Alignment
+Week 14 — Sessions, JWT & Authentication.
+
+Focus: sessions, cookies, controlled token/session abuse, and token lifecycle evidence.
+
+## Status
+Completed — Day 59.
