@@ -3855,3 +3855,43 @@ Focus: sessions, cookies, controlled token/session abuse, and token lifecycle ev
 
 ## Status
 Completed — Day 59.
+
+
+# Day 60 — OAuth / OIDC Fundamentals
+
+## Objective
+Understand the purpose of OAuth/OIDC and why applications should not receive a user's primary Google password.
+
+## Key Lessons
+- "Sign in with Google" separates authentication from the application itself.
+- The application does not need the user's Google password directly.
+- OAuth 2.0 is primarily an authorization framework.
+- OIDC adds an identity/authentication layer on top of OAuth 2.0.
+- Identity information such as an email address or profile information is different from permission to access resources such as Gmail.
+- Access to resources depends on the permissions/scopes granted.
+
+## Core Distinction
+
+OAuth:
+Authorization — what the application is allowed to access.
+
+OIDC:
+Authentication/identity — who authenticated.
+
+## Practical Status
+Theory completed.
+
+No OAuth/OIDC exploit or real account access was performed.
+
+## Key Lesson
+Having someone's email address does not mean having access to their Gmail account.
+
+Identity information ≠ resource access permission.
+
+## Curriculum Alignment
+Week 14 — Sessions, JWT & Authentication.
+
+Focus covered today: OAuth/OIDC fundamentals.
+
+## Status
+Completed — Day 60.
