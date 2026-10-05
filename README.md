@@ -3895,3 +3895,51 @@ Focus covered today: OAuth/OIDC fundamentals.
 
 ## Status
 Completed — Day 60.
+
+
+# Day 61 — Authentication State Machine: Practical Attempt
+
+## Objective
+Begin the Week 14 practical authentication work by investigating a deliberately vulnerable authentication state machine.
+
+## Lab
+PortSwigger Web Security Academy
+Authentication bypass via flawed state machine
+
+## Practical Evidence
+- Opened the authorized PortSwigger lab.
+- Role-selection screen presented:
+  - User
+  - Content Author
+- Selected `User`.
+- Application redirected to the normal shop home page.
+- No unauthorized access or authentication bypass was demonstrated.
+
+## Limitation
+The official exploitation workflow requires request interception/control with Burp Suite to manipulate the authentication state transition.
+
+Current browser-only setup does not provide the required request interception capability.
+
+## Status
+Not solved.
+
+Practical reconnaissance completed, but no exploit claim made.
+
+## Key Lesson
+Authentication vulnerabilities can exist in the state transitions between login, role selection, and authenticated application access.
+
+Testing these flaws requires visibility and control over the underlying HTTP requests, not just the rendered browser pages.
+
+## Curriculum Alignment
+Week 14 — Sessions, JWT & Authentication.
+
+Focus:
+- Authentication state
+- Session/token lifecycle
+- Controlled authentication abuse
+
+## Evidence Integrity
+No unsupported exploit, privilege escalation, or lab completion was claimed.
+
+## Status
+Day 61 completed — practical attempt paused due tooling limitation.
