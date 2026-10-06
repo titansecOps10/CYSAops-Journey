@@ -3943,3 +3943,54 @@ No unsupported exploit, privilege escalation, or lab completion was claimed.
 
 ## Status
 Day 61 completed — practical attempt paused due tooling limitation.
+
+
+# Day 62 — Reflected XSS into HTML Context
+
+## Objective
+Demonstrate reflected Cross-Site Scripting (XSS) in an authorized training environment.
+
+## Lab
+PortSwigger Web Security Academy
+Reflected XSS into HTML context with nothing encoded
+
+## Practical Evidence
+
+Normal input:
+`test`
+
+The application reflected the search input into the page.
+
+XSS payload:
+`<script>alert(1)</script>`
+
+Result:
+JavaScript executed and displayed an `alert(1)` dialog.
+
+Lab status:
+SOLVED
+
+## Attack Chain
+
+User-controlled input
+→ Server reflection
+→ HTML response
+→ Browser interprets input as executable HTML
+→ JavaScript execution
+
+## Key Lesson
+Reflected XSS occurs when attacker-controlled input is reflected into an HTML response without appropriate context-aware output encoding, allowing the browser to interpret the input as executable content.
+
+The vulnerability is not simply the presence of a `<script>` tag. The underlying issue is that untrusted data crossed into an executable HTML context.
+
+## Evidence
+- Normal input reflection observed.
+- Controlled JavaScript execution demonstrated.
+- PortSwigger lab displayed `LAB Solved`.
+
+## Practical Environment
+Firefox on Android.
+Authorized PortSwigger Web Security Academy lab.
+
+## Status
+Completed — reflected XSS successfully reproduced and verified by the lab.
