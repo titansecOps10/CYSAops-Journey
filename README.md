@@ -3994,3 +3994,75 @@ Authorized PortSwigger Web Security Academy lab.
 
 ## Status
 Completed — reflected XSS successfully reproduced and verified by the lab.
+
+
+# Day 63 — SSRF: Cloud Metadata & Filter Bypass
+
+## Objective
+Demonstrate Server-Side Request Forgery (SSRF) and understand how naive URL filtering can be bypassed through alternate IP representations.
+
+## Lab
+CHS.US SSRF Simulator
+
+## Attack Evidence
+
+### Test 1 — No Filter
+Target:
+`http://169.254.169.254/latest/metadata/iam/security-credentials/`
+
+Result:
+`200 OK — IAM role credentials exposed`
+
+The simulated server successfully connected to the cloud metadata service.
+
+### Test 2 — Literal IP Blocklist
+Same target with a literal-IP blocklist:
+
+Result:
+`BLOCKED by the filter`
+
+The filter matched the literal string:
+`169.254.169.254`
+
+### Test 3 — Decimal IP Representation
+The same destination was represented as a decimal IP:
+
+`2852039166`
+
+Result:
+`200 OK — IAM role credentials exposed`
+
+The filter did not recognize the destination as an internal IP, while the simulated fetcher's IP parser canonicalized it back to:
+
+`169.254.169.254`
+
+## Key Lesson
+SSRF defenses can fail when the security filter and the component performing the network request interpret the same input differently.
+
+Raw input:
+`2852039166`
+
+Filter interpretation:
+Not an obvious internal IP.
+
+Fetcher interpretation:
+`169.254.169.254`
+
+This is a canonicalization/parser discrepancy.
+
+## Defensive Principle
+Do not rely solely on literal string or regex blocklists.
+
+Validation should account for the canonical destination that the actual network client will resolve/connect to, with appropriate restrictions on internal and cloud-metadata destinations.
+
+## Practical Status
+Completed — SSRF demonstrated, literal blocklist bypass reproduced, and parser/canonicalization discrepancy observed in a controlled simulator.
+
+## Evidence
+- Metadata service reached with no filter.
+- Literal IP blocked by filter.
+- Decimal representation bypassed the filter.
+- Simulated metadata response returned IAM credential data.
+
+## Status
+Completed — Day 63.
