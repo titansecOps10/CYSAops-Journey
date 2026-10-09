@@ -4066,3 +4066,68 @@ Completed — SSRF demonstrated, literal blocklist bypass reproduced, and parser
 
 ## Status
 Completed — Day 63.
+
+
+Day 64 — SSRF Defense: Allowlist Validation
+
+Objective
+
+Test whether an allowlist blocks an SSRF attempt targeting cloud metadata while allowing an approved public API.
+
+Lab
+
+CHS.US SSRF Simulator
+
+Test 1 — Block Cloud Metadata
+
+Defense: Allowlist
+
+Target: "http://2852039166/latest/meta-data/iam/security-credentials/"
+
+Result: Blocked
+
+The simulator identified the destination as "169.254.169.254", which was not on the allowlist. The simulated fetcher did not run.
+
+Test 2 — Allow Approved Public API
+
+Defense: Allowlist
+
+Target: "https://api.example.com/"
+
+Result: Allowed
+
+The simulator showed:
+
+- Host: "api.example.com"
+- Resolved address: "93.184.216.34"
+- Simulated response: "200 OK"
+- Destination classification: external host; nothing internal
+
+Key Lesson
+
+An allowlist permits explicitly approved destinations instead of attempting to recognize every dangerous input.
+
+The tests demonstrated that the simulated defense blocked the unapproved metadata destination and allowed the approved public API.
+
+Production Considerations
+
+A real SSRF defense should:
+
+- Validate destinations using a strict allowlist.
+- Resolve and validate IP addresses, including IPv4 and IPv6.
+- Recheck destinations after DNS resolution.
+- Prevent redirects from reaching internal or metadata services.
+- Ensure the actual connection uses the validated destination.
+
+Evidence
+
+- Screenshot showing the metadata request blocked.
+- Screenshot showing "api.example.com" allowed with a simulated "200 OK" response.
+
+Environment
+
+Firefox on Android; browser-based SSRF simulator.
+
+Status
+
+Completed — allowlist behavior verified in simulation.
