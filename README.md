@@ -4131,3 +4131,72 @@ Firefox on Android; browser-based SSRF simulator.
 Status
 
 Completed — allowlist behavior verified in simulation.
+
+
+Day 65 — SSRF Defense Validation (Saturday Revision)
+
+Objective
+
+Compare URL-filtering approaches and validate how an allowlist handles requests to internal and approved public destinations.
+
+Lab
+
+CHS.US SSRF Simulator
+
+Environment: Firefox on Android
+Date: October 10, 2026
+
+Test 1 — Regex Blocklist
+
+Target: Decimal representation of the cloud metadata IP.
+
+"http://2852039166/latest/meta-data/iam/security-credentials/"
+
+Defense: Regex blocklist
+
+Observed result: Blocked.
+
+The simulator reported that the regex blocklist matched an internal host literal. The simulated fetcher did not run.
+
+Test 2 — Allowlist
+
+Target: Same decimal-IP request.
+
+Defense: Allowlist
+
+Observed result: Blocked.
+
+The simulator identified the host as "169.254.169.254", which was not on the allowlist. Only "api.example.com" was approved.
+
+The simulated fetcher did not run.
+
+Key Findings
+
+- A regex blocklist can block inputs that match its configured patterns.
+- String-based filtering may fail when the filter and network client interpret a destination differently.
+- An allowlist rejects destinations that are not explicitly approved.
+- The observed results demonstrate the simulator's behavior, not a production system's security.
+
+Production Defense Considerations
+
+A robust Server-Side Request Forgery (SSRF) defense should:
+
+1. Validate the destination hostname and resolved IP addresses.
+2. Reject prohibited internal and cloud metadata destinations.
+3. Revalidate destinations after DNS resolution and prevent DNS rebinding.
+4. Validate every redirect destination.
+5. Restrict outbound network access and ensure connections use validated destinations.
+
+Evidence
+
+- Screenshot: Regex blocklist blocked the decimal-IP request.
+- Screenshot: Allowlist blocked the unapproved metadata host.
+- Both screenshots show that the simulated fetcher did not run.
+
+Assessment
+
+Practical tests completed. Understanding of URL-filter limitations and production-grade destination validation remains a development objective.
+
+Status
+
+Completed — Saturday revision and evidence review.
