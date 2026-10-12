@@ -4200,3 +4200,62 @@ Practical tests completed. Understanding of URL-filter limitations and productio
 Status
 
 Completed — Saturday revision and evidence review.
+
+
+Day 67 — Unrestricted File Upload Vulnerabilities
+
+Status: Halfway Completed — Practical Lab Incomplete
+Reason: Network connectivity issues caused by my internet service provider.
+
+Objective
+
+Understand how insecure file-upload functionality can expose web applications to security risks and learn the fundamental controls used to prevent malicious or unexpected file uploads.
+
+What I Learned
+
+1. File Extension Validation
+
+Applications may restrict uploads to extensions such as ".jpg" or ".png". However, checking a filename alone does not prove that the uploaded file contains a valid image.
+
+2. File Content Validation
+
+Applications should validate the actual contents of uploaded files instead of relying entirely on user-controlled filenames or declared content types.
+
+3. MIME Type Validation
+
+MIME (Multipurpose Internet Mail Extensions) types describe the media format of a file. Because a client can manipulate the declared content type, the server should not trust it as the only validation mechanism.
+
+4. Secure File Storage
+
+Even when a file passes validation, its storage location and execution permissions matter. Uploaded content should not be allowed to execute as server-side code.
+
+Security Testing Approach
+
+The planned practical exercise was to investigate an introductory file-upload vulnerability lab, observe its validation controls, and document the results.
+
+Practical results: Not confirmed. Network connectivity problems prevented me from completing the planned lab. No successful exploit or completed practical test is being claimed.
+
+Recommended Defensive Controls
+
+- Allow only explicitly permitted file types.
+- Validate file contents, not just filenames and declared MIME types.
+- Generate safe server-side filenames.
+- Enforce file-size limits.
+- Store uploads outside executable web directories where possible.
+- Apply least-privilege permissions and restrict access to uploaded files.
+- Retest upload restrictions after implementing changes.
+
+Completion Assessment
+
+Theory: Partially covered.
+Practical lab: Not completed.
+Evidence collection: Pending.
+Overall status: Halfway completed.
+
+Blocker and Next Step
+
+The practical component was interrupted by unreliable internet connectivity from my network provider. I currently have no suitable alternative connection.
+
+I will resume the practical lab when connectivity improves, verify the application's behavior, collect evidence, and update this report with actual test results.
+
+Note: This entry records learning and planned testing, not a verified vulnerability discovery.
