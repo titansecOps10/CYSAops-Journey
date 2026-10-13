@@ -4258,4 +4258,8 @@ The practical component was interrupted by unreliable internet connectivity from
 
 I will resume the practical lab when connectivity improves, verify the application's behavior, collect evidence, and update this report with actual test results.
 
-Note: This entry records learning and planned testing, not a verified vulnerability discovery.
+Note: This entry records learning and planned testing, not a verified vulnerability discover.
+
+
+Day 68 - Same error 
+took my time to study cysa engineering learnt the concepts of web engineering. while I'm hoping network gets back up. calling it a day 
