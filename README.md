@@ -4263,3 +4263,24 @@ Note: This entry records learning and planned testing, not a verified vulnerabil
 
 Day 68 - Same error 
 took my time to study cysa engineering learnt the concepts of web engineering. while I'm hoping network gets back up. calling it a day 
+
+
+CySAops Journey — Day 33
+
+Topic
+
+Application Architecture and API Security
+
+Learning Objectives
+
+- Understand frontend, backend, APIs, and databases.
+- Understand how IDOR vulnerabilities occur.
+- Document evidence, detection, remediation, and regression tests.
+
+Security Workflow
+
+Concept → Lab → Attack Simulation → Evidence → Detection → Fix → Regression Test
+
+Scope
+
+Authorized cybersecurity labs and educational simulations only.
