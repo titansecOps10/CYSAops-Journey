@@ -4265,7 +4265,7 @@ Day 68 - Same error
 took my time to study cysa engineering learnt the concepts of web engineering. while I'm hoping network gets back up. calling it a day 
 
 
-CySAops Journey — Day 33
+CySAops Journey — Day 69
 
 Topic
 
@@ -4284,3 +4284,47 @@ Concept → Lab → Attack Simulation → Evidence → Detection → Fix → Reg
 Scope
 
 Authorized cybersecurity labs and educational simulations only.
+
+
+Day 70 — File Upload Security Assessment <Failed to finish just assessment>
+
+Assessment type: Security analysis
+Status: Conceptual assessment completed; live exploitation not performed
+Environment: Android browser
+
+Finding
+
+Title: Insufficient File-Upload Validation
+
+Severity: Potentially High, depending on execution and storage controls. A definitive severity rating requires further testing.
+
+Description
+
+The hypothetical application checks whether an uploaded filename ends in ".jpg" but does not verify the actual file contents. An attacker could potentially disguise an unexpected file as an approved image.
+
+Potential Impact
+
+Depending on server configuration and file handling, unsafe uploads could lead to stored malicious content, client-side attacks, or server-side code execution.
+
+Evidence
+
+The weakness was identified from the supplied scenario. No live application vulnerability was verified, and no exploit was executed.
+
+Recommended Remediation
+
+- Allow only explicitly approved file formats.
+- Validate file contents and independently inspect file signatures.
+- Generate server-side filenames rather than trusting user-supplied names.
+- Store uploads outside executable directories where practical.
+- Apply file-size limits and restrictive permissions.
+- Test validation controls after remediation.
+
+Verification Plan
+
+Test valid images, mismatched file extensions and contents, incorrect declared content types, and disallowed file types in an authorised test environment. Confirm that invalid uploads are rejected and accepted uploads cannot execute as server-side code.
+
+Learning Outcome
+
+Identified the difference between file-upload validation weaknesses and object-level authorisation vulnerabilities such as IDOR.
+
+Final status: Conceptual assessment completed; practical validation remains pending.
