@@ -4328,3 +4328,48 @@ Learning Outcome
 Identified the difference between file-upload validation weaknesses and object-level authorisation vulnerabilities such as IDOR.
 
 Final status: Conceptual assessment completed; practical validation remains pending.
+
+
+
+
+Security Engineering Apprenticeship — File Upload Test Matrix Day 71
+
+Assessment: File-upload validation and storage security
+Environment: Android-compatible tabletop exercise
+Status: Completed — conceptual assessment; no live testing performed
+
+Objective
+
+Define expected application behavior for valid and invalid file uploads and identify risks arising from weak validation and unsafe storage.
+
+Test Cases
+
+Test case| Expected result| Security rationale
+Valid JPEG image| Accept if all validation rules pass| Preserve legitimate functionality
+Text file renamed to ".jpg"| Reject| Validate actual file contents
+Image exceeding the size limit| Reject safely| Prevent resource exhaustion
+Uploads stored in an executable directory| Investigate and remediate| Prevent uploaded content from executing
+
+Key Findings
+
+1. Filename extensions alone are insufficient for file-type validation.
+2. Applications should validate file contents and enforce size limits.
+3. Uploaded files should be stored with restrictive permissions in a location that prevents server-side execution.
+4. Error handling should reject unsafe uploads without exposing sensitive implementation details.
+
+Recommended Controls
+
+- Enforce an allowlist of permitted file formats.
+- Validate file contents and file signatures.
+- Generate safe server-side filenames.
+- Enforce upload-size limits.
+- Store uploads outside executable directories where practical.
+- Apply least-privilege permissions and test the controls after remediation.
+
+Evidence and Limitations
+
+This was a conceptual test-matrix exercise. No live application was tested, no vulnerability was confirmed, and no remediation was independently verified.
+
+Completion Status
+
+Conceptual assessment completed. Practical validation and regression testing remain outstanding.
