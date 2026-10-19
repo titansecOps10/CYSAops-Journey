@@ -4373,3 +4373,56 @@ This was a conceptual test-matrix exercise. No live application was tested, no v
 Completion Status
 
 Conceptual assessment completed. Practical validation and regression testing remain outstanding.
+
+
+Day 71 — Security Operations Center Investigation
+
+Incident Title
+
+Suspected Account Compromise Following Repeated Authentication Failures
+
+Incident type: Suspected account takeover
+Severity: Medium initially; reassess as evidence develops
+Status: Under investigation — simulated scenario
+
+1. Executive Summary
+
+Authentication logs show four failed login attempts against the account "alice", followed by a successful login and a password change from the same source IP address. This sequence raises concern about possible password guessing and account compromise.
+
+2. Timeline
+
+Time (UTC)| Event
+09:00:11–09:00:33| Four failed login attempts
+09:01:02| Successful login
+09:03:41| Password changed
+
+3. Evidence
+
+- Four failed attempts targeted the same account within approximately 22 seconds.
+- A successful login followed 29 seconds after the final recorded failure.
+- A password change occurred 2 minutes and 39 seconds after the successful login.
+- All listed events share source IP "203.0.113.24".
+
+4. Assessment
+
+The sequence is consistent with possible password guessing followed by account takeover. However, the available records do not establish who performed the login, whether the password change was authorised, or whether the account was actually compromised.
+
+5. Recommended Response
+
+1. Contact the account owner through a trusted channel to verify the login and password change.
+2. Review authentication history, session activity, multi-factor authentication events, and related security alerts.
+3. If compromise is suspected, revoke active sessions, secure the account, and reset credentials using the organisation's incident-response procedure.
+4. Preserve relevant logs and timestamps for further analysis.
+5. Investigate the source IP in context rather than treating it alone as proof of attacker identity.
+
+6. Detection Improvement
+
+Consider an alert for repeated authentication failures followed by a successful login and a subsequent credential change. Tune the rule to account for legitimate user behavior and avoid excessive false positives.
+
+7. Limitations
+
+This investigation used fictional training logs. No real account, attacker, or security incident was identified.
+
+8. Completion Status
+
+Simulated log analysis and incident reporting completed. No live detection rule or response action was deployed or tested.
