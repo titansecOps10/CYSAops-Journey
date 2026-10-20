@@ -4426,3 +4426,18 @@ This investigation used fictional training logs. No real account, attacker, or s
 8. Completion Status
 
 Simulated log analysis and incident reporting completed. No live detection rule or response action was deployed or tested.
+
+
+Day 72 — Security Alert Triage
+
+Case: 18 failed login attempts in 4 minutes.
+
+My decision: Investigate.
+
+Why: The employee said they forgot their password, but I can't treat that explanation as proof. Repeated failed logins could be a mistake or someone trying to break into the account.
+
+First step: Verify the activity with the employee in person if possible, then check the login records for the source IP, device, timestamps, and any successful login attempts.
+
+What I learned: An alert is not proof of an attack. I need to check the evidence before closing it or taking action.
+
+Status: Completed as a simulated investigation. No live system was tested.
