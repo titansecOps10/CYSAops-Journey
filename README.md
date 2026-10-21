@@ -4441,3 +4441,14 @@ First step: Verify the activity with the employee in person if possible, then ch
 What I learned: An alert is not proof of an attack. I need to check the evidence before closing it or taking action.
 
 Status: Completed as a simulated investigation. No live system was tested.
+
+
+Day 73 — Phishing Email Triage
+
+Reviewed a simulated email threatening to disable an employee's account within 30 minutes.
+
+I classified it as suspicious because of the urgency and unfamiliar sender. My first response would be to avoid the link and report it through a trusted company channel.
+
+Next, I'd verify the request with management or IT and inspect the link destination and email authentication headers.
+
+Status: Tabletop exercise completed. No live email or link was tested.
