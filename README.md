@@ -4463,3 +4463,13 @@ I rated the incident high priority because the events together suggest possible 
 My first response would be to revoke active sessions, secure the account and recovery settings, and preserve the logs for investigation.
 
 Status: Simulation completed. No live account or system was accessed.
+
+Day 75 — Account Recovery After a Suspected Compromise
+
+Worked through a simulated account takeover recovery case.
+
+I chose to prioritise security over restoring access immediately. The recovery process should verify the employee, reset compromised credentials, check recovery settings and remove unauthorised access methods.
+
+I'd also enable multi-factor authentication, verify the enrolled methods, and confirm the account is secure before closing the incident.
+
+Status: Tabletop exercise completed. No live account was accessed or recovered.
