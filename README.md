@@ -4452,3 +4452,14 @@ I classified it as suspicious because of the urgency and unfamiliar sender. My f
 Next, I'd verify the request with management or IT and inspect the link destination and email authentication headers.
 
 Status: Tabletop exercise completed. No live email or link was tested.
+
+
+Day 74 — Suspected Account Takeover
+
+Reviewed a simulated security incident involving a phishing email, a successful login from an unfamiliar IP address, and a sudden recovery-email change.
+
+I rated the incident high priority because the events together suggest possible account takeover.
+
+My first response would be to revoke active sessions, secure the account and recovery settings, and preserve the logs for investigation.
+
+Status: Simulation completed. No live account or system was accessed.
