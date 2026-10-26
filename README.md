@@ -4473,3 +4473,182 @@ I chose to prioritise security over restoring access immediately. The recovery p
 I'd also enable multi-factor authentication, verify the enrolled methods, and confirm the account is secure before closing the incident.
 
 Status: Tabletop exercise completed. No live account was accessed or recovered.
+
+
+
+
+# CYSAops Journey — Day 76
+## Cryptographic Foundations: Hashing, Encryption & Blockchain
+
+**Track:** Cybersecurity Operations  
+**Day:** 76  
+**Focus:** Cryptography, integrity verification, digital signatures and blockchain  
+**Practical Reference:** [SHA-256 Hash Generator](https://toolsinatab.com/en/tools/sha-256-hash-generator/)
+
+---
+
+## 1. Learning Objectives
+
+- Explain confidentiality, integrity and non-repudiation.
+- Explain blockchain and the role of cryptographic hashes.
+- Define a cryptographic hash function.
+- Differentiate symmetric and asymmetric cryptography.
+- Practise SHA-256 hashing and compare digests.
+- Understand how cryptographic mechanisms support cybersecurity.
+
+## 2. Confidentiality
+
+Confidentiality ensures that information is accessible only to authorised people, systems or processes.
+
+**Examples:**
+1. Encrypting confidential files using AES.
+2. Protecting network communications using TLS.
+
+**Security objective:** Prevent unauthorised disclosure of information.
+
+## 3. Integrity
+
+Integrity ensures that information remains accurate and has not been changed without authorisation.
+
+**Examples:**
+1. Comparing a downloaded file's SHA-256 digest with a trusted reference digest.
+2. Verifying a digital signature before trusting a software update.
+
+**Security objective:** Detect unauthorised or unexpected modifications.
+
+A matching hash supports integrity verification only when the expected digest is trustworthy.
+
+## 4. Non-Repudiation
+
+Non-repudiation provides evidence that can help establish that a person or system performed an action, such as signing a digital document.
+
+**Examples:**
+1. A digitally signed software release.
+2. A digitally signed electronic contract.
+
+Digital signatures can support non-repudiation, integrity and origin authentication. Their reliability depends on private-key security, identity verification and the surrounding process.
+
+A hash alone does not prove who created a message.
+
+## 5. Blockchain
+
+Blockchain is a type of distributed ledger that records data in linked blocks.
+
+A block commonly contains transaction data, a timestamp or other metadata, and a reference to the preceding block's hash.
+
+**How hash linking works:**
+1. A block's contents are hashed.
+2. The next block records the preceding block's hash.
+3. Changing earlier data changes its hash.
+4. The following block's stored reference no longer matches.
+5. A network's consensus and validation rules help determine whether altered history is accepted.
+
+**Applications:**
+- Transaction records
+- Supply-chain tracking
+- Digital asset systems
+- Tamper-evident audit trails
+
+Blockchain does not guarantee that submitted data is truthful, and not every blockchain provides confidentiality.
+
+## 6. What Is a Hash Function?
+
+A cryptographic hash function converts input data of arbitrary length into a fixed-length digest.
+
+### SHA-256
+
+SHA-256 belongs to the SHA-2 family and produces a 256-bit digest, normally displayed as 64 hexadecimal characters.
+
+**Important properties:**
+- Deterministic output
+- Preimage resistance
+- Collision resistance
+- Sensitivity to changes in the input
+
+Hashing is not encryption. A hash is not designed to be decrypted to recover the original message.
+
+### Practical example
+
+Input A:
+`TitanSEC Day 76`
+
+Input B:
+`TitanSEC Day 76!`
+
+Generate the SHA-256 digest for each input and compare the results. Record the actual outputs and your observations in `practical-labs.md`.
+
+## 7. Symmetric Cryptography
+
+Symmetric cryptography uses the same secret key for encryption and decryption.
+
+**Example 1: AES**
+- A widely used symmetric block cipher.
+- AES-GCM can provide confidentiality and integrity protection when correctly configured.
+
+**Example 2: ChaCha20**
+- A symmetric stream cipher.
+- ChaCha20-Poly1305 combines encryption with authentication.
+
+**Advantages:**
+- Efficient for encrypting large amounts of data.
+- Suitable for file and network encryption.
+
+**Challenge:** Secret keys must be distributed and protected securely.
+
+## 8. Asymmetric Cryptography
+
+Asymmetric cryptography uses a related public/private key pair. The operation depends on the algorithm.
+
+**Example 1: RSA**
+- RSA can support digital signatures and, with appropriate schemes, public-key encryption.
+- RSA-OAEP is an encryption scheme.
+- RSA-PSS is a signature scheme.
+
+**Example 2: Elliptic-Curve Cryptography (ECC)**
+- ECDSA supports digital signatures.
+- ECDH supports key agreement.
+
+**Advantages:**
+- Supports public-key authentication and digital signatures.
+- Can help establish shared secrets without directly transmitting the secret key.
+
+**Challenge:** Public keys must be reliably associated with the correct identities, and private keys must remain protected.
+
+## 9. Key Differences
+
+| Feature | Symmetric | Asymmetric |
+|---|---|---|
+| Keys | Shared secret key | Public/private key pair |
+| Typical examples | AES, ChaCha20 | RSA, ECDSA |
+| Performance | Generally efficient for bulk data | Generally more computationally expensive |
+| Key distribution | Shared secret must be protected | Public-key distribution and identity validation are important |
+| Common uses | File and network encryption | Signatures, authentication and key agreement |
+
+## 10. Practical Evidence
+
+The practical exercises are documented in `practical-labs.md`.
+
+Evidence should include:
+- Actual SHA-256 outputs
+- Input-change comparison
+- File-integrity test results, where performed
+- Symmetric/asymmetric practical observations
+- Digital-signature and blockchain explanations
+
+Only report tests that were actually completed.
+
+## 11. Security Lessons
+
+- A hash is not encryption.
+- A plain hash does not establish the identity of its creator.
+- Encryption requires sound key management.
+- Digital signatures are different from encryption.
+- Blockchain hash links make tampering detectable but do not guarantee absolute immutability.
+- Password storage should use a suitable password-hashing scheme, such as Argon2id, rather than plain SHA-256.
+
+## 12. References
+
+- [NIST SHA-256 Definition](https://csrc.nist.gov/glossary/term/sha_256)
+- [NIST Hash Functions](https://csrc.nist.gov/Projects/Hash-Functions)
+- [NIST Digital Signature Definition](https://csrc.nist.gov/glossary/term/digital_signature)
+- [SHA-256 Practical Tool](https://toolsinatab.com/en/tools/sha-256-hash-generat
