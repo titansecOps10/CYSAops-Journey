@@ -4651,4 +4651,29 @@ Only report tests that were actually completed.
 - [NIST SHA-256 Definition](https://csrc.nist.gov/glossary/term/sha_256)
 - [NIST Hash Functions](https://csrc.nist.gov/Projects/Hash-Functions)
 - [NIST Digital Signature Definition](https://csrc.nist.gov/glossary/term/digital_signature)
-- [SHA-256 Practical Tool](https://toolsinatab.com/en/tools/sha-256-hash-generat
+- [SHA-256 Practical Tool](https://toolsinatab.com/en/tools/sha-256-hash-generate
+
+
+Day 77 — Symmetric Encryption Practical
+
+I used a browser-based tool on my phone to encrypt the message Join the World. I copied the generated output into the decryption section and recovered the original message successfully.
+This demonstrated the encryption-and-decryption workflow. I still need to confirm the exact algorithm and output type shown by the tool before documenting it specifically as AES ciphertext.
+Status: Encryption/decryption workflow completed; algorithm verification pending.
+
+
+Day 78 — Understanding Asymmetric Encryption 
+
+Today, I studied asymmetric encryption and compared public and private keys with familiar Nigerian banking security examples.
+
+I used a Bank Verification Number (BVN) as an analogy for a public key because it can be shared for identification, while an ATM PIN helped me understand why a private key must remain secret.
+
+I also learned the important difference: a BVN is an identifier, whereas a cryptographic public key is mathematically linked to its corresponding private key.
+
+Key lessons:
+
+A public key can be shared. A private key must remain confidential. A public key can encrypt information for its corresponding private-key owner. A private key can decrypt that information. Private keys can also be used to create digital signatures, which public keys can verify. 
+
+Practical status: Conceptual understanding and real-world analogy completed. Hands-on RSA key generation and encryption/decryption still pending verification.
+
+Next step: Complete an RSA encryption and decryption exercise and document the actual results.
+
