@@ -5161,3 +5161,151 @@ Next validation: build or use an authorised test API and verify the endpoint mat
 
 Can an application enforce correct transaction ownership on its normal endpoint but fail to enforce it on alternate routes or after a transaction changes state?
 
+
+Days 88–89 — API Detection Engineering, Remediation & Retesting
+
+Track: Application & API Security
+Focus: Broken Object Level Authorization (BOLA)
+Weekly activities: Thursday — Detection & Analysis | Friday — Remediation & Retesting
+Environment: Simulated payment API investigation
+
+1. Objectives
+
+- Build detection logic for suspicious cross-user transaction access.
+- Identify successful unauthorised access attempts.
+- Understand false positives in security monitoring.
+- Propose consistent server-side authorisation controls.
+- Design positive and negative regression tests.
+
+2. Thursday — Detection Engineering
+
+Investigation scenario
+
+A simulated payment API contains several endpoints for viewing, exporting, downloading and refunding transactions.
+
+The previous adversarial experiment suggested that the primary transaction endpoint denied access to another user's transaction, while alternative endpoints might expose the same object.
+
+Synthetic security events
+
+Event| Authenticated user| Transaction owner| Action| HTTP status
+E001| Alice| Alice| View| 200
+E002| Alice| Bob| View| 403
+E003| Alice| Bob| Export| 200
+E004| Alice| Bob| Download| 200
+E005| Bob| Bob| Download| 200
+E006| Alice| Bob| Refund| 403
+E007| Bob| Bob| View| 200
+E008| Alice| Charlie| Export| 403
+
+These are fictional events created for analysis.
+
+Detection rule 1 — Successful cross-user access
+
+SELECT *
+FROM api_events
+WHERE authenticated_user_id != transaction_owner_id
+  AND response_status = 200;
+
+Expected alerts: E003 and E004.
+
+These events indicate successful responses involving transactions owned by another user. They require investigation to determine whether access was legitimate or unauthorised.
+
+Detection rule 2 — Denied cross-user access attempts
+
+SELECT *
+FROM api_events
+WHERE authenticated_user_id != transaction_owner_id
+  AND response_status IN (401, 403);
+
+This identifies denied attempts that may provide useful evidence of probing or attempted access violations.
+
+False-positive analysis
+
+Not every cross-user access is malicious.
+
+Legitimate examples may include:
+
+- Approved customer-support access.
+- Delegated account permissions.
+- Administrative investigations.
+- Explicitly authorised business operations.
+
+A detection system should consider user roles, delegated permissions, support-case references and the actual authorisation decision.
+
+Key lesson: An alert is an investigative signal, not automatic proof of an attack.
+
+3. Friday — Remediation
+
+Identified weakness
+
+The simulated application applies inconsistent object-level authorisation.
+
+The primary transaction endpoint denies Alice access to Bob's transaction, but export and download endpoints return successful responses.
+
+Recommended remediation
+
+1. Authenticate the requesting user.
+2. Retrieve the requested transaction and its legitimate owner.
+3. Check ownership or an explicitly granted permission.
+4. Enforce the same authorisation policy across all routes.
+5. Perform the check before returning sensitive data or executing a transaction operation.
+6. Deny unauthorised requests without exposing protected information.
+7. Record security-relevant decisions with a correlation ID.
+
+The authorisation check must cover view, export, download and refund operations.
+
+4. Regression testing
+
+After remediation, repeat the original test cases.
+
+Test case| Expected outcome
+Alice views Alice's transaction| 200
+Alice views Bob's transaction| 403 or deliberately concealed 404
+Alice exports Bob's transaction| Denied
+Alice downloads Bob's transaction| Denied
+Alice refunds Bob's transaction| Denied; no refund side effect
+Bob downloads Bob's transaction| 200
+
+The tests should verify both the HTTP response and the actual outcome.
+
+For example, a denied refund request must not change the transaction state, account balance or ledger.
+
+5. Evidence required for verification
+
+A security analyst should collect:
+
+- Authenticated user identity.
+- Transaction ID and legitimate owner.
+- Endpoint and HTTP method.
+- Request and response details, with credentials redacted.
+- Response body and whether sensitive data was delivered.
+- Correlation ID and relevant server-side audit events.
+- Authorisation decision.
+- Operation result.
+- Any side effects, including transaction-state or ledger changes.
+
+An audit event saying "export_completed" does not independently prove that the customer received the file. The investigation should establish what the event means and correlate it with the actual export result and data delivery.
+
+6. Security lessons
+
+- A successful HTTP response does not prove that access was authorised.
+- A denied response does not independently prove that no sensitive operation occurred.
+- Authorisation must be enforced consistently across every endpoint.
+- Detection rules need context to reduce false positives.
+- Remediation is incomplete until regression tests confirm the fix.
+- Logs, responses and application side effects should be correlated during an investigation.
+
+7. Limitations
+
+This was a simulated investigation using synthetic events and proposed detection queries.
+
+No production logs were analysed, no real payment API was accessed, and no live vulnerability was confirmed.
+
+The SQL examples demonstrate detection logic and would require adaptation to the actual logging schema and authorisation model of a real application.
+
+8. Research question
+
+How can a detection system correlate API requests, authorisation decisions, file delivery and transaction side effects to distinguish attempted BOLA exploitation from confirmed unauthorised data exposure?
+
+Curriculum cycle completed: Detect → Analyse → Fix → Retest → Document.
+
