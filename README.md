@@ -4677,3 +4677,487 @@ Practical status: Conceptual understanding and real-world analogy completed. Han
 
 Next step: Complete an RSA encryption and decryption exercise and document the actual results.
 
+
+Day 81–82 — Transaction Integrity, Race Conditions and Double-Spending
+
+Objective
+
+Understand how financial systems prevent overspending, duplicate transactions and conflicting account updates.
+
+Core Concepts
+
+I studied how transaction validation and consensus mechanisms help maintain the integrity of financial records.
+A system should never allow a user to spend more than their available balance. However, a vulnerability in the implementation can cause the correct business rule to fail.
+
+1. Double-Spending Simulation
+
+Starting balance: 100 tokens.
+Two transactions were submitted:
+
+Transaction A: Alice sends Bob 70 tokens.
+
+Transaction B: Alice sends Carol 60 tokens.
+
+The correct behaviour is to accept one transaction and reject the other if both cannot be funded.
+After Transaction A, Alice has 30 tokens remaining. Transaction B should therefore fail.
+
+2. Race Conditions
+
+I learned that simultaneous requests can create a race condition when multiple operations read the same account balance before any deduction is committed.
+For example:
+
+Alice has ₦20,000.
+
+One request attempts to withdraw ₦15,000.
+
+Another request attempts to withdraw ₦5,000.
+
+Both requests read the original balance before either update is completed.
+
+If the system does not coordinate these operations correctly, it may approve conflicting transactions.
+
+This can result in overspending or inconsistent account records.
+
+3. Missing Atomicity
+
+A financial operation should treat balance validation and deduction as one controlled operation.
+If the balance check and deduction are separated without proper concurrency controls, another request may interfere between the two steps.
+Controls include:
+
+Atomic database transactions.
+
+Row-level locking or equivalent concurrency controls.
+
+Conditional balance updates.
+
+Unique transaction references.
+
+Idempotency controls.
+
+Transaction reconciliation.
+
+4. Other Related Vulnerabilities
+
+I explored several weaknesses that could affect financial applications:
+
+Time-of-check to time-of-use (TOCTOU): A condition changes between validation and execution.
+
+Business logic vulnerability: The application permits an operation that violates its financial rules.
+
+Idempotency failure: Repeated requests unintentionally execute the same operation more than once.
+
+Transaction-state management failure: Pending, successful and failed transactions are handled inconsistently.
+
+Race condition: Concurrent operations produce an unexpected result because of unsafe execution order.
+
+5. Banking and Blockchain Security
+
+I learned that both traditional banking systems and cryptocurrency platforms must protect transaction integrity.
+Blockchain uses cryptographic signatures, distributed ledger designs and consensus mechanisms to validate transactions and maintain agreement about ledger history.
+However, blockchain is not automatically immune to attacks. Private-key theft, smart-contract vulnerabilities, exchange compromises and implementation flaws can still result in financial losses.
+Traditional banking systems also face concurrency, authorisation and transaction-processing risks.
+
+Personal Observation
+
+I also considered a withdrawal-limit incident I had previously experienced, where multiple withdrawal requests appeared to exceed the stated limit.
+I recognised that this could be related to a business logic issue, race condition or transaction-processing inconsistency. However, I did not have the system logs or technical evidence needed to identify the actual cause.
+
+Practical Status
+
+Transaction-validation scenario: Analysed.
+
+Double-spending scenario: Analysed.
+
+Race-condition behaviour: Understood conceptually.
+
+Missing atomicity: Studied.
+
+Banking and blockchain comparison: Completed.
+
+Live exploitation or backend testing: Not performed.
+
+Conclusion
+
+The main lesson from these sessions is that having the correct security rule is not enough. The application and database must enforce that rule correctly, even when several requests arrive simultaneously.
+A system must validate transactions, coordinate concurrent operations and maintain consistent account records.
+Next step: Practise transaction concurrency, atomic database updates and idempotency in a controlled local environment when suitable laptop access becomes available.
+
+
+Day 83 — Idempotency, Duplicate Transactions and Replay Attacks
+
+Objective
+
+Understand how payment systems detect duplicate requests and prevent unintended repeated financial operations.
+
+Practical Scenario
+
+I studied a simulated payment log containing:
+TimeTransaction IDAmountStatus10:00:01PAY-001₦5,000Successful10:00:04PAY-001₦5,000Successful10:00:08PAY-002₦3,000Successful 
+I identified that PAY-001 appeared twice with the same transaction identifier and amount. This raised a possible duplicate-processing issue.
+
+Real-World Observation
+
+I connected the exercise to an experience on the Money Points application.
+I initially intended to transfer ₦20,000 to one recipient but sent ₦10,000 first. When I attempted another ₦10,000 transfer to the same recipient within approximately one minute, the application detected a possible duplicate transaction and asked me to confirm whether I wanted to proceed.
+I confirmed that the second payment was intentional.
+This demonstrated how transaction-monitoring rules can identify suspiciously similar payment patterns while still allowing legitimate transactions after user confirmation.
+The warning alone does not establish that the application uses idempotency keys or replay-attack protection.
+
+Security Concepts Learned
+
+1. Idempotency
+
+Idempotency ensures that retrying the same logical operation with the same idempotency key does not cause the financial operation to execute multiple times.
+
+2. Duplicate Transaction Detection
+
+Payment systems can compare transaction amounts, recipients, timestamps and other characteristics to identify potentially accidental duplicate payments.
+
+3. Replay Attacks
+
+A replay attack occurs when an attacker attempts to reuse a previously valid request to repeat an operation.
+
+4. Replay Prevention
+
+Controls can include:
+
+Unique transaction identifiers.
+
+Nonces and freshness checks.
+
+Server-side request validation.
+
+Idempotency keys.
+
+Secure transaction-state management.
+
+Important Distinction
+
+Two intentional payments of ₦10,000 each should be allowed when they represent two separate authorised transactions.
+Idempotency should prevent the same logical payment request from being executed repeatedly. It should not automatically block every legitimate payment that happens to have the same amount and recipient.
+
+If a Duplicate Payment Is Completed
+
+A completed duplicate payment may require a refund, reversal or recipient-initiated return, depending on the payment provider and applicable procedures.
+Transaction references, timestamps and payment evidence are important when reporting the incident.
+
+Practical Assessment
+
+Identified a repeated transaction identifier: Completed.
+
+Explained duplicate transaction detection: Completed.
+
+Identified idempotency as a duplicate-processing control: Completed.
+
+Identified nonce and server-side validation as replay-prevention measures: Completed.
+
+Connected the lesson to a real payment-app experience: Completed.
+
+Score: 3/3
+
+Practical Limitations
+
+This was a simulated log-analysis exercise supported by a real-world observation. I did not access the Money Points backend, inspect its source code or verify its internal security implementation.
+
+Conclusion
+
+I learned that payment systems must distinguish between legitimate repeated payments and accidental or malicious duplicate requests.
+A secure payment system should prevent unintended repeated processing without unnecessarily blocking legitimate transactions.
+
+
+Day 84 — Payment API Security and Transaction State Management
+
+Objective
+
+Understand how payment APIs manage transaction states and identify security risks caused by inconsistent transaction processing.
+
+Practical Scenario
+
+I examined the following simulated payment log:
+TimeTransactionEventStatus09:00:01TX-1001Payment initiatedPending09:00:03TX-1001Bank response receivedFailed09:00:05TX-1001Account debitedSuccessful 
+
+Initial Observation
+
+The transaction received a failed response from the bank, but the later log recorded an account debit and marked the transaction successful.
+This inconsistency raises questions about how the payment system processes bank responses, updates transaction records and confirms account debits.
+
+Security Concepts
+
+1. Transaction State Management
+
+A payment system should maintain a reliable transaction lifecycle. Common states include:
+
+Initiated
+
+Pending
+
+Successful
+
+Failed
+
+Reversed
+
+State changes should follow authorised and validated rules.
+
+2. Improper State Transitions
+
+A transaction should not be marked successful merely because a request was submitted or an API response was received. Success should depend on verified payment confirmation.
+
+3. Race Conditions
+
+Concurrent operations can cause inconsistent results when multiple processes attempt to update the same transaction or account balance.
+
+4. API Response Validation
+
+Payment systems should validate responses from trusted payment providers and reconcile them with authoritative transaction records before confirming success.
+
+5. Transaction Reconciliation
+
+Reconciliation compares records between the application, payment processor and bank to identify missing, duplicated or inconsistent transactions.
+
+Security Controls
+
+Enforce valid transaction-state transitions.
+
+Verify payment confirmation server-side.
+
+Use atomic database operations where appropriate.
+
+Apply idempotency controls to prevent duplicate processing.
+
+Maintain immutable or tamper-evident audit records.
+
+Reconcile application and provider transaction records.
+
+Apply proper authorisation to refunds and reversals.
+
+Practical Assessment
+
+Identified an inconsistency between a failed bank response and a successful debit record.
+
+Examined possible transaction-state management weaknesses.
+
+Reviewed the importance of response validation and reconciliation.
+
+Practical Limitations
+
+This was a simulated payment-log investigation. No live payment API, bank account, production database or payment infrastructure was accessed.
+The log alone does not establish the exact cause of the inconsistency or prove that a vulnerability was exploited.
+
+Conclusion
+
+Payment security requires more than protecting API endpoints. It also requires correct transaction-state management, reliable confirmation, controlled state transitions and reconciliation across connected systems.
+
+
+Day 85 — Payment API Authorisation and Transaction Ownership
+
+Objective
+
+Understand how payment APIs enforce transaction ownership and prevent users from accessing other users' financial records.
+
+Practical Scenario
+
+I examined a simulated API request:
+GET /api/transactions/TX-2002 Authorization: Bearer ALICE_SESSION 
+The API returned:
+{ "transaction_id": "TX-2002", "owner": "Bob", "amount": 75000, "status": "Successful" } 
+Alice was authenticated, but the returned transaction belonged to Bob.
+
+Security Finding
+
+The scenario demonstrates a potential Broken Object Level Authorization (BOLA) vulnerability.
+The application appears to authenticate Alice but fails to establish whether she is authorised to access Bob's transaction.
+This is an authorisation failure, not an authentication or encryption failure.
+
+Key Concepts
+
+1. Authentication
+
+Authentication establishes who a user is.
+
+2. Authorisation
+
+Authorisation determines what an authenticated user is permitted to access or do.
+
+3. Transaction Ownership
+
+Every transaction should be associated with an owner or an explicitly authorised account.
+
+4. Broken Object Level Authorization (BOLA)
+
+BOLA occurs when an API fails to enforce object-level permissions, allowing users to access records belonging to other users.
+
+Expected Secure Behaviour
+
+The API should:
+
+Verify the authenticated user's identity.
+
+Retrieve the requested transaction.
+
+Check whether the user owns the transaction or has explicitly granted access.
+
+Deny unauthorised access.
+
+Avoid exposing sensitive transaction information in error responses.
+
+For Alice's request to access Bob's private transaction, the API should return an appropriate denial, commonly HTTP 403 Forbidden or HTTP 404 Not Found, depending on the application's design.
+
+Detection and Remediation
+
+Detection:
+
+Review API access logs for users requesting unrelated transaction identifiers.
+
+Investigate repeated access-denied responses.
+
+Test access controls using separate authorised test accounts.
+
+Monitor unusual patterns of transaction enumeration.
+
+Remediation:
+
+Enforce server-side object-level authorisation.
+
+Derive user identity from the authenticated session, not a client-supplied owner ID.
+
+Apply access checks to every sensitive API operation.
+
+Test ownership enforcement for viewing, modifying and reversing transactions.
+
+Practical Assessment
+
+Identified the difference between authentication and authorisation.
+
+Recognised the potential BOLA condition.
+
+Identified transaction ownership as a necessary access-control check.
+
+Described expected denial behaviour and defensive controls.
+
+Practical Limitations
+
+This was a simulated API investigation. No live payment API, real customer transaction or production system was accessed.
+The scenario demonstrates a potential vulnerability; it does not establish that a real application has this weakness.
+
+Conclusion
+
+Authentication alone does not protect financial records. Payment APIs must verify transaction ownership and enforce authorisation on every sensitive operation.
+
+Days 86–87 — Payment API Security: Ownership, State & Transaction Integrity
+
+Objective
+
+Investigate how payment APIs can fail when they do not consistently verify transaction ownership or correctly enforce transaction state.
+Lab status: Simulated scenarios and analysis. No live payment API was tested.
+
+1. Broken Object Level Authorization (BOLA)
+
+Scenario
+
+Two users exist:
+
+Alice — User ID 101
+
+Bob — User ID 202
+
+Transaction TX-2002 belongs to Bob.
+
+Alice is authenticated and requests:
+GET /api/transactions/TX-2002
+The simulated API returns Bob's transaction data instead of denying access.
+
+Finding
+
+Authentication confirms Alice's identity. It does not automatically give her permission to access Bob's transaction.
+The API has to verify that the authenticated user is authorised to access the specific transaction requested.
+
+Follow-up endpoint test
+
+The normal transaction endpoint is then changed to return 403 Forbidden, but an alternate route:
+GET /api/transactions/TX-2002/export
+still returns Bob's receipt.
+This demonstrates how a developer can secure one endpoint while leaving another route vulnerable to the same underlying BOLA issue.
+
+Security requirements
+
+Enforce object-level authorisation on the server.
+
+Verify transaction ownership or an explicitly granted permission on every relevant route.
+
+Apply the same checks to export, download, receipt, refund and other transaction actions.
+
+Avoid relying on hidden buttons, frontend restrictions or unpredictable transaction IDs as access controls.
+
+Test the full endpoint inventory, not only the main page.
+
+2. Transaction State Integrity
+
+Scenario
+
+A simulated payment workflow produces these events:
+
+Payment initiated — Pending
+
+Bank response received — Failed
+
+Account nevertheless debited — Successful
+
+Finding
+
+The recorded events conflict. A payment should not become successful merely because one component reports success while another component reports failure.
+The application needs to validate authoritative payment outcomes and enforce permitted state transitions.
+
+Security requirements
+
+Define valid transaction states and transitions.
+
+Validate payment-provider responses before changing transaction status.
+
+Prevent conflicting or repeated updates from producing inconsistent results.
+
+Use idempotency controls to prevent duplicate processing.
+
+Reconcile internal records against authoritative provider or bank records.
+
+Log state changes with timestamps, transaction identifiers and the component responsible.
+
+3. Related Concepts
+
+ConceptWhat it protectsAuthenticationEstablishes who the user isAuthorisationDetermines what the user may doBOLAPrevents access to another user's object without permissionIdempotencyPrevents retries from unintentionally processing the same operation more than onceTransaction state integrityKeeps payment status and financial records consistentCryptographyProtects confidentiality, integrity and authenticity when correctly applied 
+Cryptography alone does not fix missing authorisation. An encrypted transaction receipt can still be exposed to the wrong user if the application fails to check ownership.
+
+4. Investigation Method
+
+The work followed the TitanSEC practical loop:
+Understand → Build → Break → Observe → Detect → Fix → Retest → Document
+The scenarios were simulated for learning. No live exploitation, real customer data or real financial transactions were involved.
+
+5. Key Lessons
+
+A user being authenticated does not mean they are authorised to access every transaction.
+
+A 403 response on one endpoint does not prove that every endpoint is protected.
+
+Access checks must follow the transaction object across all routes and actions.
+
+Payment status must follow a controlled state machine.
+
+Idempotency, authorisation, transaction integrity and cryptography solve different security problems.
+
+A security fix is not complete until the original test and relevant alternate paths have been retested.
+
+6. Evidence and Limitations
+
+Evidence: simulated Alice/Bob transaction requests and responses.
+
+Evidence: simulated payment-state event sequence.
+
+Limitation: no live API, server logs, packet capture or source code was available.
+
+Next validation: build or use an authorised test API and verify the endpoint matrix, state transitions and remediation with repeatable tests.
+
+7. Next Research Question
+
+Can an application enforce correct transaction ownership on its normal endpoint but fail to enforce it on alternate routes or after a transaction changes state?
+
