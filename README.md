@@ -5309,3 +5309,201 @@ How can a detection system correlate API requests, authorisation decisions, file
 
 Curriculum cycle completed: Detect → Analyse → Fix → Retest → Document.
 
+Days 90–91 — API Detection Automation & Alert Prioritisation
+
+Track: Security Engineering / Detection Engineering
+Focus: BOLA Detection, Python Automation, Alert Enrichment and Reporting
+Environment: Simulated payment API logs
+
+1. Objectives
+
+- Automate analysis of API security events using Python.
+- Detect suspicious cross-user transaction access.
+- Classify alerts by severity and confidence.
+- Prioritise events based on evidence and potential impact.
+- Document the investigation and proposed detection workflow.
+
+2. Saturday — Automation & Integration
+
+Scenario
+
+A simulated payment API has multiple transaction endpoints. Previous testing identified potential inconsistent object-level authorisation across viewing, exporting and downloading operations.
+
+Manually analysing thousands of events would be inefficient. The objective is to automate the repetitive parts of log analysis.
+
+Synthetic input data
+
+Event| User| Owner| Action| Status
+E001| Alice| Alice| View| 200
+E002| Alice| Bob| View| 403
+E003| Alice| Bob| Export| 200
+E004| Alice| Bob| Download| 200
+E005| Bob| Bob| Download| 200
+E006| Alice| Bob| Refund| 403
+
+Python detection component
+
+def analyse_event(event):
+    user = event["user_id"]
+    owner = event["owner_id"]
+    action = event["action"]
+    status = int(event["status"])
+
+    if user == owner:
+        return None
+
+    if status == 200:
+        return {
+            "event_id": event["event_id"],
+            "severity": "P2",
+            "confidence": "Medium",
+            "alert": "Successful cross-user response",
+            "action": action
+        }
+
+    if status in (401, 403):
+        return {
+            "event_id": event["event_id"],
+            "severity": "P3",
+            "confidence": "Medium",
+            "alert": "Denied cross-user access attempt",
+            "action": action
+        }
+
+    return None
+
+Important limitation: This is an initial demonstration. A production detector must use the actual authorisation policy, including delegated access and administrative permissions. An HTTP 200 alone does not establish unauthorised data exposure.
+
+3. Sunday — Alert Prioritisation
+
+Severity classification
+
+Priority| Severity| Description
+P1| Critical| Confirmed unauthorised sensitive-data exposure or serious unauthorised side effect
+P2| High| Strong indication of successful unauthorised access requiring urgent investigation
+P3| Medium| Suspicious or repeated denied access attempts
+P4| Low| Isolated low-confidence event with no established impact
+
+Alert enrichment fields
+
+Every alert should include:
+
+- Event ID and timestamp.
+- Authenticated user and resource owner.
+- Endpoint and action.
+- HTTP response status.
+- Severity and confidence.
+- Data sensitivity and potential impact.
+- Frequency or repeated-attempt information.
+- Delegated permission or role context.
+- Evidence status.
+
+Evidence status
+
+Use separate labels to avoid confusing an HTTP response with a confirmed security incident:
+
+Evidence tag| Meaning
+Attempted| Suspicious access was attempted
+Response-success| API returned a successful response
+Operation-confirmed| The requested operation actually completed
+Exposure-confirmed| Evidence establishes that protected data was delivered or accessed
+Side-effect-confirmed| An unauthorised state change or transaction operation occurred
+Unverified| Available evidence is insufficient
+
+Example priority decisions
+
+Event| Evidence| Suggested priority
+E002| Cross-user view denied| P3
+E003| Cross-user export returned 200| P2
+E004| Cross-user download returned 200| P2
+Confirmed delivery of Bob's sensitive transaction statement to Alice without permission| Exposure confirmed| P1
+Isolated denied request with no other suspicious context| Low-confidence signal| P4
+
+These are proposed classifications for the simulated exercise, not confirmed real-world incidents.
+
+4. Risk prioritisation
+
+Severity should not be based on HTTP status alone.
+
+The analyst should consider:
+
+1. Impact: What information or operation was involved?
+2. Evidence: Was data actually delivered or a transaction changed?
+3. Confidence: How strong is the evidence of unauthorised activity?
+4. Frequency: Is the activity repeated or part of a pattern?
+5. Authorisation context: Was there legitimate delegated access?
+6. Scope: How many accounts or resources may be affected?
+
+A confirmed unauthorised financial transaction may deserve immediate attention even if it affects only one account. A large number of harmless denied requests may not deserve the same priority.
+
+5. Detection workflow
+
+API event
+   |
+   v
+Validate and parse event
+   |
+   v
+Check identity and resource ownership
+   |
+   v
+Evaluate authorisation context
+   |
+   v
+Detect suspicious activity
+   |
+   v
+Enrich alert with evidence and impact
+   |
+   v
+Assign severity and confidence
+   |
+   v
+Generate analyst report
+
+6. Remediation and verification
+
+The application team should enforce object-level authorisation consistently across every endpoint.
+
+Recommended controls:
+
+- Verify ownership or explicit permission on every request.
+- Apply checks before sensitive data is returned.
+- Apply checks before refunds or other state-changing operations.
+- Record authorisation decisions and operation outcomes.
+- Test permitted and forbidden access paths.
+- Verify that denied requests do not cause side effects.
+
+Regression tests
+
+Test| Expected outcome
+Alice accesses her own transaction| Allowed
+Alice accesses Bob's transaction| Denied
+Alice exports Bob's transaction| Denied
+Alice downloads Bob's transaction| Denied
+Alice refunds Bob's transaction| Denied, with no side effect
+Bob accesses his own transaction| Allowed
+
+7. Limitations
+
+- All event data is synthetic.
+- No live payment platform was tested.
+- The Python code is a starter component, not a production-ready monitoring system.
+- The severity model is a proposed classification requiring validation against the organisation's risk policy.
+- Successful HTTP responses require further investigation before exposure is confirmed.
+
+8. Key learning outcomes
+
+- Python can automate repetitive security-event analysis.
+- Detection rules need contextual enrichment.
+- Severity and confidence are different concepts.
+- Successful responses are not automatic proof of unauthorised access.
+- Alert prioritisation helps analysts focus on events with the greatest potential impact.
+- Detection must connect to remediation and retesting.
+
+9. Next research hypothesis
+
+Can an API security detector distinguish a successful but authorised delegated transaction operation from a genuinely unauthorised cross-user access event by correlating identity, permission, operation and data-delivery telemetry?
+
+Curriculum cycle: Automate → Integrate → Document.
+
